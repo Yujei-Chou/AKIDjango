@@ -1,0 +1,246 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>#}
+{#    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>#}
+{#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">#}
+{#</head>#}
+{##}
+{#<body>#}
+{#    <table id="example" class="display" style="width:100%">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>patienthealthsystemstayid</th>#}
+{#                <th>age</th>#}
+{#                <th>gender</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#    </table>#}
+{#</body>#}
+{#<script>#}
+{#    $(document).ready(function(){#}
+{#    $('#example').DataTable({#}
+{#        "ajax": "/datatables",#}
+{#        "columns": [#}
+{#            { "data": "patienthealthsystemstayid" },#}
+{#            { "data": "age" },#}
+{#            { "data": "gender" },#}
+{#        ],#}
+{#        "language": {#}
+{#            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"#語言，現在用的是中文，其他的語言在http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/可以找到#}
+{#        }#}
+{#    });#}
+{#});#}
+{#</script>#}
+{#</html>#}
+
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+{% with status="Alive" %}
+<head>
+    <meta charset=”UTF-8">
+    <title>patient</title>
+
+
+</head>
+
+<body>
+    <label>選擇表格:</label>
+    <select id="tables">
+        <option value="admissiondrug">AdmissionDrug</option>
+        <option value="admissiondx">Admissiondx</option>
+        <option value="allergy">Allergy</option>
+        <option value="apacheapsvar">Apacheapsvar</option>
+        <option value="apachepatientresult">Apachepatientresult</option>
+        <option value="apachepredvar">Apachepredvar</option>
+        <option value="careplancareprovider">Careplancareprovider</option>
+        <option value="careplaneol">Careplaneol</option>
+        <option value="careplangeneral">Careplangeneral</option>
+        <option value="careplangoal">Careplangoal</option>
+        <option value="careplaninfectiousdisease">Careplaninfectiousdisease</option>
+        <option value="customlab">Customlab</option>
+        <option value="diagnosis">Diagnosis</option>
+        <option value="infusiondrug">Infusiondrug</option>
+        <option value="intakeoutput">Intakeoutput</option>
+        <option value="lab">Lab</option>
+        <option value="medication">Medication</option>
+        <option value="microlab">Microlab</option>
+        <option value="note">Note</option>
+        <option value="nurseassessment">Nurseassessment</option>
+        <option value="nursecare">Nursecare</option>
+        <option value="nursecharting">Nursecharting</option>
+        <option value="pasthistory">Pasthistory</option>
+        <option value="patient">Patient</option>
+        <option value="physicalexam">Physicalexam</option>
+        <option value="respiratorycare">Respiratorycare</option>
+        <option value="respiratorycharting">Respiratorycharting</option>
+        <option value="treatment">Treatment</option>
+        <option value="vitalaperiodic">Vitalaperiodic</option>
+        <option value="vitalperiodic">Vitalperiodic</option>
+    </select>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Patient</p>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+        //document.getElementById("test").innerHTML=temp;
+
+        function LinkSamePatientID(x) {
+            var table_name=document.getElementById("tables").value;
+            console.log(table_name);
+            window.location.href="/"+table_name+"/"+x.toString();
+        }
+
+        function SelectOption() {
+            var option_id=document.getElementById("Patient_select").value;
+            console.log(option_id);
+            window.location.href="/linkPage/"+option_id.toString();
+        }
+
+
+    </script>
+    <table id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>UniquepID</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Admission Height</th>
+            <th>Admission Weight</th>
+{#            <th>Dialysis</th>#}
+{#            <th>Death</th>#}
+            <th>PatientHealthSystemStayID</th>
+            <th>Death</th>
+
+{#            <th>AKI</th>#}
+
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>patienthealthsystemstayid</th>#}
+{#            <th>ethnicity</th>#}
+{#            <th>hospitalid</th>#}
+{#            <th>wardid</th>#}
+{#            <th>apacheadmissiondx</th>#}
+{#            <th>admissionheight</th>#}
+{#            <th>hospitaladmittime24</th>#}
+{#            <th>hospitaladmitoffset</th>#}
+{#            <th>hospitaladmitsource</th>#}
+{#            <th>hospitaldischargeyear</th>#}
+{#            <th>hospitaldischargetime24</th>#}
+{#            <th>hospitaldischargeoffset</th>#}
+{#            <th>hospitaldischargelocation</th>#}
+{#            <th>hospitaldischargestatus</th>#}
+{#            <th>unittype</th>#}
+{#            <th>unitadmittime24</th>#}
+{#            <th>unitadmitsource</th>#}
+{#            <th>unitvisitnumber</th>#}
+{#            <th>unitstaytype</th>#}
+{#            <th>admissionweight</th>#}
+{#            <th>dischargeweight</th>#}
+{#            <th>unitdischargetime24</th>#}
+{#            <th>unitdischargeoffset</th>#}
+{#            <th>unitdischargelocation</th>#}
+{#            <th>unitdischargestatus</th>#}
+
+
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            {% ifchanged contact.uniquepid %}
+                <td>{{ contact.uniquepid }}</td>
+                <td>{{ contact.gender }}</td>
+                <td>{{ contact.age }}</td>
+                <td>{{ contact.admissionheight }}</td>
+                <td>{{ contact.admissionweight }}</td>
+{#                <td>{{ contact.connectID.dialysis }}</td>#}
+{#                <td>{{ contact.hospitaldischargestatus }}</td>#}
+                <td>
+                    <select id="Patient_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                        <option value="--select PatientHealthSystemStayID--">--select PatientHealthSystemStayID--</option>
+                        {% for data in contact.uniquepid|filterHospitalID %}
+                            {% ifchanged data.patienthealthsystemstayid %}
+                                <option value="/linkPage/{{ data.patienthealthsystemstayid }}">{{ data.patienthealthsystemstayid }}</option>
+                            {% endifchanged %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>{{ contact.uniquepid|DischargeHosStatus }}</td>
+
+
+
+
+            {% endifchanged %}
+
+{#            <td onclick="LinkSamePatientID({{ contact.patientunitstayid }})">{{ contact.patientunitstayid }}</td>#}
+{#            <td>{{ contact.patienthealthsystemstayid }}</td>#}
+{#            <td>{{ contact.ethnicity }}</td>#}
+{#            <td>{{ contact.hospitalid.hospitalid }}</td>#}
+{#            <td>{{ contact.wardid }}</td>#}
+{#            <td>{{ contact.apacheadmissiondx }}</td>#}
+{#            <td>{{ contact.admissionheight }}</td>#}
+{#            <td>{{ contact.hospitaladmittime24 }}</td>#}
+{#            <td>{{ contact.hospitaladmitoffset }}</td>#}
+{#            <td>{{ contact.hospitaladmitsource }}</td>#}
+{#            <td>{{ contact.hospitaldischargeyear }}</td>#}
+{#            <td>{{ contact.hospitaldischargetime24 }}</td>#}
+{#            <td>{{ contact.hospitaldischargeoffset }}</td>#}
+{#            <td>{{ contact.hospitaldischargelocation }}</td>#}
+{#            <td>{{ contact.hospitaldischargestatus }}</td>#}
+{#            <td>{{ contact.unittype }}</td>#}
+{#            <td>{{ contact.unitadmittime24 }}</td>#}
+{#            <td>{{ contact.unitadmitsource }}</td>#}
+{#            <td>{{ contact.unitvisitnumber }}</td>#}
+{#            <td>{{ contact.unitstaytype }}</td>#}
+{#            <td>{{ contact.admissionweight }}</td>#}
+{#            <td>{{ contact.dischargeweight }}</td>#}
+{#            <td>{{ contact.unitdischargetime24 }}</td>#}
+{#            <td>{{ contact.unitdischargeoffset }}</td>#}
+{#            <td>{{ contact.unitdischargelocation }}</td>#}
+{#            <td>{{ contact.unitdischargestatus }}</td>#}
+
+            <!--
+            <td><a href="/careplaneol/{{ contact.patientunitstayid}}">{{ contact.patientunitstayid}}</a></td>
+            -->
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>
+</html>
+{% endwith %}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang=”en”>
+<head>
+    <meta charset=”UTF-8">
+    <title>Apacheapsvar</title>
+
+
+</head>
+
+<body>
+
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Apacheapsvar</p>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+
+
+    </script>
+    <table border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>apacheapsvarid</th>
+            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
+            <th>intubated</th>
+            <th>vent</th>
+            <th>dialysis</th>
+            <th>eyes</th>
+            <th>motor</th>
+            <th>verbal</th>
+            <th>meds</th>
+            <th>urine</th>
+            <th>wbc</th>
+            <th>temperature</th>
+            <th>respiratoryrate</th>
+            <th>sodium</th>
+            <th>heartrate</th>
+            <th>meanbp</th>
+            <th>ph</th>
+            <th>hematocrit</th>
+            <th>creatinine</th>
+            <th>albumin</th>
+            <th>pao2</th>
+            <th>pco2</th>
+            <th>bun</th>
+            <th>glucose</th>
+            <th>bilirubin</th>
+            <th>fio2</th>
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.apacheapsvarid }}</td>
+            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
+            <td>{{ contact.intubated }}</td>
+            <td>{{ contact.vent }}</td>
+            <td>{{ contact.dialysis }}</td>
+            <td>{{ contact.eyes }}</td>
+            <td>{{ contact.motor }}</td>
+            <td>{{ contact.verbal }}</td>
+            <td>{{ contact.meds }}</td>
+            <td>{{ contact.urine }}</td>
+            <td>{{ contact.wbc }}</td>
+            <td>{{ contact.temperature }}</td>
+            <td>{{ contact.respiratoryrate }}</td>
+            <td>{{ contact.sodium }}</td>
+            <td>{{ contact.heartrate }}</td>
+            <td>{{ contact.meanbp }}</td>
+            <td>{{ contact.ph }}</td>
+            <td>{{ contact.hematocrit }}</td>
+            <td>{{ contact.creatinine }}</td>
+            <td>{{ contact.albumin }}</td>
+            <td>{{ contact.pao2 }}</td>
+            <td>{{ contact.pco2 }}</td>
+            <td>{{ contact.bun }}</td>
+            <td>{{ contact.glucose }}</td>
+            <td>{{ contact.bilirubin }}</td>
+            <td>{{ contact.fio2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>

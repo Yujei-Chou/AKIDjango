@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+<head>
+    <meta charset=”UTF-8">
+    <title>patient</title>
+
+
+</head>
+
+<body>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Patient</p>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+        //document.getElementById("test").innerHTML=temp;
+
+        function LinkSamePatientID(x) {
+            var table_name=document.getElementById("tables").value;
+            console.log(table_name);
+            window.location.href="/"+table_name+"/"+x.toString();
+        }
+
+        function SelectOption() {
+            var option_id=document.getElementById("Patient_select").value;
+            console.log(option_id);
+            window.location.href="/linkPage/"+option_id.toString();
+        }
+
+
+    </script>
+    <table id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>PatientHealthSystemStayID</th>
+            <th>PatientUnitStayID</th>
+{#            <th>AKI</th>#}
+
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>patienthealthsystemstayid</th>#}
+{#            <th>ethnicity</th>#}
+{#            <th>hospitalid</th>#}
+{#            <th>wardid</th>#}
+{#            <th>apacheadmissiondx</th>#}
+{#            <th>admissionheight</th>#}
+{#            <th>hospitaladmittime24</th>#}
+{#            <th>hospitaladmitoffset</th>#}
+{#            <th>hospitaladmitsource</th>#}
+{#            <th>hospitaldischargeyear</th>#}
+{#            <th>hospitaldischargetime24</th>#}
+{#            <th>hospitaldischargeoffset</th>#}
+{#            <th>hospitaldischargelocation</th>#}
+{#            <th>hospitaldischargestatus</th>#}
+{#            <th>unittype</th>#}
+{#            <th>unitadmittime24</th>#}
+{#            <th>unitadmitsource</th>#}
+{#            <th>unitvisitnumber</th>#}
+{#            <th>unitstaytype</th>#}
+{#            <th>admissionweight</th>#}
+{#            <th>dischargeweight</th>#}
+{#            <th>unitdischargetime24</th>#}
+{#            <th>unitdischargeoffset</th>#}
+{#            <th>unitdischargelocation</th>#}
+{#            <th>unitdischargestatus</th>#}
+
+
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            {% ifchanged contact.patienthealthsystemstayid %}
+                <td>{{ contact.patienthealthsystemstayid }}</td>
+                <td>
+                    <select id="Patient_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                        <option value="--select PatientUnitStayID--">--select PatientUnitStayID--</option>
+                            {% for data in contact.patienthealthsystemstayid|filterUnitID %}
+                                <option value="/linkPage/{{ data.patientunitstayid }}">{{ data.patientunitstayid }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+            {% endifchanged %}
+
+
+{#            <td onclick="LinkSamePatientID({{ contact.patientunitstayid }})">{{ contact.patientunitstayid }}</td>#}
+{#            <td>{{ contact.patienthealthsystemstayid }}</td>#}
+{#            <td>{{ contact.ethnicity }}</td>#}
+{#            <td>{{ contact.hospitalid.hospitalid }}</td>#}
+{#            <td>{{ contact.wardid }}</td>#}
+{#            <td>{{ contact.apacheadmissiondx }}</td>#}
+{#            <td>{{ contact.admissionheight }}</td>#}
+{#            <td>{{ contact.hospitaladmittime24 }}</td>#}
+{#            <td>{{ contact.hospitaladmitoffset }}</td>#}
+{#            <td>{{ contact.hospitaladmitsource }}</td>#}
+{#            <td>{{ contact.hospitaldischargeyear }}</td>#}
+{#            <td>{{ contact.hospitaldischargetime24 }}</td>#}
+{#            <td>{{ contact.hospitaldischargeoffset }}</td>#}
+{#            <td>{{ contact.hospitaldischargelocation }}</td>#}
+{#            <td>{{ contact.hospitaldischargestatus }}</td>#}
+{#            <td>{{ contact.unittype }}</td>#}
+{#            <td>{{ contact.unitadmittime24 }}</td>#}
+{#            <td>{{ contact.unitadmitsource }}</td>#}
+{#            <td>{{ contact.unitvisitnumber }}</td>#}
+{#            <td>{{ contact.unitstaytype }}</td>#}
+{#            <td>{{ contact.admissionweight }}</td>#}
+{#            <td>{{ contact.dischargeweight }}</td>#}
+{#            <td>{{ contact.unitdischargetime24 }}</td>#}
+{#            <td>{{ contact.unitdischargeoffset }}</td>#}
+{#            <td>{{ contact.unitdischargelocation }}</td>#}
+{#            <td>{{ contact.unitdischargestatus }}</td>#}
+
+            <!--
+            <td><a href="/careplaneol/{{ contact.patientunitstayid}}">{{ contact.patientunitstayid}}</a></td>
+            -->
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>
+</html>

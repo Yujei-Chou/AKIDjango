@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang=”en”>
+<head>
+    <meta charset=”UTF-8">
+    <title>Careplangoal</title>
+
+
+</head>
+
+<body>
+
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Careplangoal</p>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+
+
+    </script>
+    <table border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>cplgoalid</th>
+            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
+            <th>cplgoaloffset</th>
+            <th>cplgoalcategory</th>
+            <th>cplgoalvalue</th>
+            <th>cplgoalstatus</th>
+            <th>activeupondischarge</th>
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.cplgoalid }}</td>
+            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
+            <td>{{ contact.cplgoaloffset }}</td>
+            <td>{{ contact.cplgoalcategory }}</td>
+            <td>{{ contact.cplgoalvalue }}</td>
+            <td>{{ contact.cplgoalstatus }}</td>
+            <td>{{ contact.activeupondischarge }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>
