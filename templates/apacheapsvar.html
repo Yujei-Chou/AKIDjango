@@ -36,62 +36,114 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>apacheapsvarid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>intubated</th>
-            <th>vent</th>
-            <th>dialysis</th>
-            <th>eyes</th>
-            <th>motor</th>
-            <th>verbal</th>
-            <th>meds</th>
-            <th>urine</th>
-            <th>wbc</th>
-            <th>temperature</th>
-            <th>respiratoryrate</th>
-            <th>sodium</th>
-            <th>heartrate</th>
-            <th>meanbp</th>
-            <th>ph</th>
-            <th>hematocrit</th>
-            <th>creatinine</th>
-            <th>albumin</th>
-            <th>pao2</th>
-            <th>pco2</th>
-            <th>bun</th>
-            <th>glucose</th>
-            <th>bilirubin</th>
-            <th>fio2</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            {% if feature == "HCT" %}
+                <th title="set to -1 when not present; set to the APACHE API’s worst Hct lab value when present">Hematocrit</th>
+            {% endif %}
+            {% if feature == "temperature" %}
+                <th title="set to -1 when not present; set to the APACHE API’s worst Celsius temperature value when present">Temperature</th>
+            {% endif %}
+            {% if feature == "creatinine" %}
+                <th title="set to -1 when not present; set to the APACHE API’s worst creatinine lab value when present">Creatinine</th>
+            {% endif %}
+            {% if feature == "urine" %}
+                <th title="set to -1 when not present; set to the APACHE API’s summed 24 hour urine output value when present">Urine</th>
+            {% endif %}
+            {% if feature == "BUN" %}
+                <th title="set to -1 when not present; set to the APACHE API’s worst BUN lab value when present">BUN</th>
+            {% endif %}
+            {% if feature == "PH" %}
+                <th title="set to -1 when not present; set to the APACHE API’s pH value for the worst ABG data set when present">Ph</th>
+            {% endif %}
+            {% if feature == "Ca" %}
+                <th title="set to -1 when not present; set to the APACHE API’s worst sodium lab value when present">Sodium</th>
+            {% endif %}
+            {% if feature == "paO2_FiO2" %}
+                <th title="set to -1 when not present; set to the APACHE API’s PaO2 value for the worst ABG data set when present">paO2</th>
+                <th title="set to -1 when not present; set to the APACHE API’s FiO2 value for the worst ABG data set when present">FiO2</th>
+            {% endif %}
+{#            <th>apacheapsvarid</th>#}
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>intubated</th>#}
+{#            <th>vent</th>#}
+{#            <th>dialysis</th>#}
+{#            <th>eyes</th>#}
+{#            <th>motor</th>#}
+{#            <th>verbal</th>#}
+{#            <th>meds</th>#}
+{#            <th>urine</th>#}
+{#            <th>wbc</th>#}
+{#            <th>temperature</th>#}
+{#            <th>respiratoryrate</th>#}
+{#            <th>sodium</th>#}
+{#            <th>heartrate</th>#}
+{#            <th>meanbp</th>#}
+{#            <th>ph</th>#}
+{#            <th>hematocrit</th>#}
+{#            <th>creatinine</th>#}
+{#            <th>albumin</th>#}
+{#            <th>pao2</th>#}
+{#            <th>pco2</th>#}
+{#            <th>bun</th>#}
+{#            <th>glucose</th>#}
+{#            <th>bilirubin</th>#}
+{#            <th>fio2</th>#}
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.apacheapsvarid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.intubated }}</td>
-            <td>{{ contact.vent }}</td>
-            <td>{{ contact.dialysis }}</td>
-            <td>{{ contact.eyes }}</td>
-            <td>{{ contact.motor }}</td>
-            <td>{{ contact.verbal }}</td>
-            <td>{{ contact.meds }}</td>
-            <td>{{ contact.urine }}</td>
-            <td>{{ contact.wbc }}</td>
-            <td>{{ contact.temperature }}</td>
-            <td>{{ contact.respiratoryrate }}</td>
-            <td>{{ contact.sodium }}</td>
-            <td>{{ contact.heartrate }}</td>
-            <td>{{ contact.meanbp }}</td>
-            <td>{{ contact.ph }}</td>
-            <td>{{ contact.hematocrit }}</td>
-            <td>{{ contact.creatinine }}</td>
-            <td>{{ contact.albumin }}</td>
-            <td>{{ contact.pao2 }}</td>
-            <td>{{ contact.pco2 }}</td>
-            <td>{{ contact.bun }}</td>
-            <td>{{ contact.glucose }}</td>
-            <td>{{ contact.bilirubin }}</td>
-            <td>{{ contact.fio2 }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            {% if feature == "HCT" %}
+                <td title="set to -1 when not present; set to the APACHE API’s worst Hct lab value when present">{{ contact.hematocrit }}</td>
+            {% endif %}
+            {% if feature == "temperature" %}
+                <td title="set to -1 when not present; set to the APACHE API’s worst Celsius temperature value when present">{{ contact.temperature }}</td>
+            {% endif %}
+            {% if feature == "creatinine" %}
+                <td title="set to -1 when not present; set to the APACHE API’s worst creatinine lab value when present">{{ contact.creatinine }}</td>
+            {% endif %}
+            {% if feature == "urine" %}
+                <td title="set to -1 when not present; set to the APACHE API’s summed 24 hour urine output value when present">{{ contact.urine }}</td>
+            {% endif %}
+            {% if feature == "BUN" %}
+                <td title="set to -1 when not present; set to the APACHE API’s worst BUN lab value when present">{{ contact.bun }}</td>
+            {% endif %}
+            {% if feature == "PH" %}
+                <td title="set to -1 when not present; set to the APACHE API’s pH value for the worst ABG data set when present">{{ contact.ph }}</td>
+            {% endif %}
+            {% if feature == "Ca" %}
+                <td title="set to -1 when not present; set to the APACHE API’s worst sodium lab value when present">{{ contact.sodium }}</td>
+            {% endif %}
+            {% if feature == "paO2_FiO2" %}
+                <td title="set to -1 when not present; set to the APACHE API’s PaO2 value for the worst ABG data set when present">{{ contact.pao2 }}</td>
+                <td title="set to -1 when not present; set to the APACHE API’s FiO2 value for the worst ABG data set when present">{{ contact.fio2 }}</td>
+            {% endif %}
+{#            <td>{{ contact.apacheapsvarid }}</td>#}
+{#            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>#}
+{#            <td>{{ contact.intubated }}</td>#}
+{#            <td>{{ contact.vent }}</td>#}
+{#            <td>{{ contact.dialysis }}</td>#}
+{#            <td>{{ contact.eyes }}</td>#}
+{#            <td>{{ contact.motor }}</td>#}
+{#            <td>{{ contact.verbal }}</td>#}
+{#            <td>{{ contact.meds }}</td>#}
+{#            <td>{{ contact.urine }}</td>#}
+{#            <td>{{ contact.wbc }}</td>#}
+{#            <td>{{ contact.temperature }}</td>#}
+{#            <td>{{ contact.respiratoryrate }}</td>#}
+{#            <td>{{ contact.sodium }}</td>#}
+{#            <td>{{ contact.heartrate }}</td>#}
+{#            <td>{{ contact.meanbp }}</td>#}
+{#            <td>{{ contact.ph }}</td>#}
+{#            <td>{{ contact.hematocrit }}</td>#}
+{#            <td>{{ contact.creatinine }}</td>#}
+{#            <td>{{ contact.albumin }}</td>#}
+{#            <td>{{ contact.pao2 }}</td>#}
+{#            <td>{{ contact.pco2 }}</td>#}
+{#            <td>{{ contact.bun }}</td>#}
+{#            <td>{{ contact.glucose }}</td>#}
+{#            <td>{{ contact.bilirubin }}</td>#}
+{#            <td>{{ contact.fio2 }}</td>#}
         </tr>
         {% endfor %}
     </table>

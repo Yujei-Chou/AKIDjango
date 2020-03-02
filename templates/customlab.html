@@ -36,19 +36,17 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>customlabid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>labotheroffset</th>
-            <th>labothertypeid</th>
-            <th>labothername</th>
-            <th>labotherresult</th>
-            <th>labothervaluetext</th>
+            <th>PatientUnitStayID</th>
+            <th>LabOtherOffset</th>
+            <th>LabOtherTypeID</th>
+            <th>LabOtherName</th>
+            <th>LabOtherResult</th>
+            <th>LabOtherValueText</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.customlabid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
+            <td>{{ contact.patientunitstayid.patientunitstayid }}</td>
             <td>{{ contact.labotheroffset }}</td>
             <td>{{ contact.labothertypeid }}</td>
             <td>{{ contact.labothername }}</td>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+<head>
+    <meta charset=”UTF-8">
+    <title>PatientInHospital</title>
+
+
+</head>
+
+<body>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Patient</p>
+
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+        //document.getElementById("test").innerHTML=temp;
+
+        function LinkSamePatientID(x) {
+            var table_name=document.getElementById("tables").value;
+            console.log(table_name);
+            window.location.href="/"+table_name+"/"+x.toString();
+        }
+
+
+
+    </script>
+    <table id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>PatientHealthSystemStayID</th>
+            <th>Hospital Discharge Year</th>
+            <th>Hospital Admit Time24</th>
+            <th>Hospital Discharge Time24</th>
+            <th>Hospital Discharge Status</th>
+            <th>PatientUnitStayID</th>
+
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            {% ifchanged contact.patienthealthsystemstayid %}
+                <p align="left">Patient's uniquepID:{{ contact.uniquepid }}</p>
+                <td title="病患入院ID">{{ contact.patienthealthsystemstayid }}</td>
+                <td title="離院年分">{{ contact.hospitaldischargeyear }}</td>
+                <td title="入院時間">{{ contact.hospitaladmittime24 }}</td>
+                <td title="離院時間">{{ contact.hospitaldischargetime24 }}</td>
+                <td title="此次住院最終是否死亡">{{ contact.hospitaldischargestatus }}</td>
+                <td title="病患住進ICU對應的ID">
+                    <select id="Patient_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                        <option value="#">--select PatientUnitStayID--</option>
+                            {% for data in contact.patienthealthsystemstayid|filterUnitID %}
+                                <option value="/PatientInUnit/{{ data.patientunitstayid }}">{{ data.patientunitstayid }}({{ data.numberoftimeinicu|timeInICU }})</option>
+                            {% endfor %}
+                    </select>
+                </td>
+            {% endifchanged %}
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>
+</html>

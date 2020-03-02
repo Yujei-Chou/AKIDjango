@@ -36,24 +36,22 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>diagnosisid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>activeupondischarge</th>
-            <th>diagnosisoffset</th>
-            <th>diagnosisstring</th>
-            <th>icd9code</th>
-            <th>diagnosispriority</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="denotes whether the diagnosis was active upon discharge from the unit: True or False">Active Upon Discharge</th>
+            <th title="number of minutes from unit admit time that the diagnosis was entered">Diagnosis Offset</th>
+            <th title="the full pathstring of the diagnosis selected in eCareManager">Diagnosis String</th>
+            <th title="ICD-9 code for the diagnosis">icd9code</th>
+            <th title="picklist value which denotes whether the diagnosis was marked as: Primary, Major, or Other">Diagnosis Priority</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.diagnosisid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.activeupondischarge }}</td>
-            <td>{{ contact.diagnosisoffset }}</td>
-            <td>{{ contact.diagnosisstring }}</td>
-            <td>{{ contact.icd9code }}</td>
-            <td>{{ contact.diagnosispriority }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="denotes whether the diagnosis was active upon discharge from the unit: True or False">{{ contact.activeupondischarge }}</td>
+            <td title="number of minutes from unit admit time that the diagnosis was entered">{{ contact.diagnosisoffset }}</td>
+            <td title="the full pathstring of the diagnosis selected in eCareManager">{{ contact.diagnosisstring }}</td>
+            <td title="ICD-9 code for the diagnosis">{{ contact.icd9code }}</td>
+            <td title="picklist value which denotes whether the diagnosis was marked as: Primary, Major, or Other">{{ contact.diagnosispriority }}</td>
         </tr>
         {% endfor %}
     </table>

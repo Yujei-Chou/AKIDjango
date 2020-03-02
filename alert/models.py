@@ -50,6 +50,7 @@ class Patient(models.Model):
     unitdischargelocation = models.CharField(max_length=100, blank=True, null=True)
     unitdischargestatus = models.CharField(max_length=10, blank=True, null=True)
     uniquepid = models.CharField(max_length=10, blank=True, null=True)
+    numberoftimeinicu = models.CharField(max_length=10, blank=True, null=True)
 
 
 

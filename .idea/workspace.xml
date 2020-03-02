@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ade33064-3b1b-4bf0-b8e0-e228f1d1e785" name="Default Changelist" comment="" />
+    <list default="true" id="ade33064-3b1b-4bf0-b8e0-e228f1d1e785" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/AKIPatient/SampleAllPatients.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AKIPatient/test.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alert/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/alert/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alert/templatetags/filterUnitID.py" beforeDir="false" afterPath="$PROJECT_DIR$/alert/templatetags/filterUnitID.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alert/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/alert/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apacheapsvar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apacheapsvar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/customlab.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/customlab.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/diagnosis.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/diagnosis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/infusiondrug.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/infusiondrug.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/intakeoutput.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/intakeoutput.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/lab.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lab.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/nursecharting.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nursecharting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pasthistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pasthistory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/patient.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/patient.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/perpatient.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/physicalexam.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/physicalexam.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/respiratorycharting.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/respiratorycharting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/treatment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/treatment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/vitalaperiodic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/vitalaperiodic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/vitalperiodic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/vitalperiodic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/untitled/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/untitled/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +55,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1V5t9ycPVcTYE0YFISZchcBSz2L" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -108,7 +135,8 @@
       <workItem from="1581407797017" duration="4000" />
       <workItem from="1581407819192" duration="1776000" />
       <workItem from="1581818502561" duration="123467000" />
-      <workItem from="1582376477227" duration="22899000" />
+      <workItem from="1582376477227" duration="74305000" />
+      <workItem from="1582680161291" duration="33927000" />
     </task>
     <servers />
   </component>
@@ -128,29 +156,29 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="539" y="189" key="FileChooserDialogImpl/0.0.1368.872@0.0.1368.872" timestamp="1581825769579" />
-    <state width="1326" height="149" key="GridCell.Tab.0.bottom" timestamp="1582437589010">
+    <state width="1325" height="149" key="GridCell.Tab.0.bottom" timestamp="1583124535018">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="149" key="GridCell.Tab.0.bottom/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582437589010" />
-    <state width="1326" height="149" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1582187032110" />
+    <state width="1325" height="149" key="GridCell.Tab.0.bottom/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1583124535018" />
+    <state width="1326" height="149" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1583068192808" />
     <state width="1342" height="258" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1576837632111" />
-    <state width="1326" height="149" key="GridCell.Tab.0.center" timestamp="1582437589010">
+    <state width="1325" height="149" key="GridCell.Tab.0.center" timestamp="1583124535018">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="149" key="GridCell.Tab.0.center/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582437589010" />
-    <state width="1326" height="149" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1582187032108" />
+    <state width="1325" height="149" key="GridCell.Tab.0.center/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1583124535018" />
+    <state width="1326" height="149" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1583068192807" />
     <state width="1342" height="258" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1576837632110" />
-    <state width="1326" height="149" key="GridCell.Tab.0.left" timestamp="1582437589010">
+    <state width="1325" height="149" key="GridCell.Tab.0.left" timestamp="1583124535018">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="149" key="GridCell.Tab.0.left/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582437589010" />
-    <state width="1326" height="149" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1582187032106" />
+    <state width="1325" height="149" key="GridCell.Tab.0.left/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1583124535018" />
+    <state width="1326" height="149" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1583068192807" />
     <state width="1342" height="258" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1576837632109" />
-    <state width="1326" height="149" key="GridCell.Tab.0.right" timestamp="1582437589010">
+    <state width="1325" height="149" key="GridCell.Tab.0.right" timestamp="1583124535018">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state width="1326" height="149" key="GridCell.Tab.0.right/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582437589010" />
-    <state width="1326" height="149" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1582187032108" />
+    <state width="1325" height="149" key="GridCell.Tab.0.right/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1583124535018" />
+    <state width="1326" height="149" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1583068192808" />
     <state width="1342" height="258" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1576837632110" />
     <state width="1342" height="258" key="GridCell.Tab.1.bottom" timestamp="1576837632112">
       <screen x="0" y="0" width="1536" height="864" />
@@ -172,10 +200,10 @@
       <screen x="0" y="0" width="1368" height="872" />
     </state>
     <state x="186" y="78" key="SettingsEditor/0.0.1368.872@0.0.1368.872" timestamp="1581403621538" />
-    <state x="372" y="260" key="com.intellij.ide.util.TipDialog" timestamp="1582376482033">
+    <state x="372" y="260" key="com.intellij.ide.util.TipDialog" timestamp="1582680164685">
       <screen x="0" y="0" width="1368" height="872" />
     </state>
-    <state x="372" y="260" key="com.intellij.ide.util.TipDialog/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582376482033" />
+    <state x="372" y="260" key="com.intellij.ide.util.TipDialog/0.0.1368.872/533.-1080.1920.1040@0.0.1368.872" timestamp="1582680164685" />
     <state x="372" y="260" key="com.intellij.ide.util.TipDialog/0.0.1368.872@0.0.1368.872" timestamp="1581818527043" />
     <state x="473" y="94" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1582186653128">
       <screen x="0" y="0" width="1368" height="872" />

@@ -36,22 +36,20 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>physicalexamid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>physicalexamoffset</th>
-            <th>physicalexampath</th>
-            <th>physicalexamvalue</th>
-            <th>physicalexamtext</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that the physical exam item was entered">Physical Exam Offset</th>
+            <th title="the root path of the physical exam">Physical Exam Path</th>
+            <th title="Structured picklist of available of physical exam items">Physical Exam Value</th>
+            <th title="The string builder value of the physical exam item">Physical Exam Text</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.physicalexamid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.physicalexamoffset }}</td>
-            <td>{{ contact.physicalexampath }}</td>
-            <td>{{ contact.physicalexamvalue }}</td>
-            <td>{{ contact.physicalexamtext }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the physical exam item was entered">{{ contact.physicalexamoffset }}</td>
+            <td title="the root path of the physical exam ">{{ contact.physicalexampath }}</td>
+            <td title="Structured picklist of available of physical exam items">{{ contact.physicalexamvalue }}</td>
+            <td title="The string builder value of the physical exam item">{{ contact.physicalexamtext }}</td>
         </tr>
         {% endfor %}
     </table>

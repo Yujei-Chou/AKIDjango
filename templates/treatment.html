@@ -36,20 +36,18 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>treatmentid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>treatmentoffset</th>
-            <th>treatmentstring</th>
-            <th>activeupondischarge</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that the treatment was entered">Treatment Offset</th>
+            <th title="the path of the treatment">Treatment String</th>
+            <th title="denotes whether the treatment was active upon discharge from the unit: True or False">Active Upon Discharge</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.treatmentid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.treatmentoffset }}</td>
-            <td>{{ contact.treatmentstring }}</td>
-            <td>{{ contact.activeupondischarge }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the treatment was entered">{{ contact.treatmentoffset }}</td>
+            <td title="the path of the treatment">{{ contact.treatmentstring }}</td>
+            <td title="denotes whether the treatment was active upon discharge from the unit: True or False">{{ contact.activeupondischarge }}</td>
         </tr>
         {% endfor %}
     </table>

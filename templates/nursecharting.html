@@ -36,26 +36,22 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>nursingchartid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>nursingchartoffset</th>
-            <th>nursingchartentryoffset</th>
-            <th>nursingchartcelltypecat</th>
-            <th>nursingchartcelltypevallabel</th>
-            <th>nursingchartcelltypevalname</th>
-            <th>nursingchartvalue</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that nursing chart column">nursingchartoffset</th>
+            <th title="紀錄是屬於哪種類型的">nursingchartcelltypecat</th>
+            <th title="紀錄的標籤">nursingchartcelltypevallabel</th>
+            <th title="紀錄的細項">nursingchartcelltypevalname</th>
+            <th title="紀錄對應的值">nursingchartvalue</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.nursingchartid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.nursingchartoffset }}</td>
-            <td>{{ contact.nursingchartentryoffset }}</td>
-            <td>{{ contact.nursingchartcelltypecat }}</td>
-            <td>{{ contact.nursingchartcelltypevallabel }}</td>
-            <td>{{ contact.nursingchartcelltypevalname }}</td>
-            <td>{{ contact.nursingchartvalue }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that nursing chart column">{{ contact.nursingchartoffset }}</td>
+            <td title="紀錄是屬於哪種類型的">{{ contact.nursingchartcelltypecat }}</td>
+            <td title="紀錄的標籤">{{ contact.nursingchartcelltypevallabel }}</td>
+            <td title="紀錄的細項">{{ contact.nursingchartcelltypevalname }}</td>
+            <td title="紀錄對應的值">{{ contact.nursingchartvalue }}</td>
         </tr>
         {% endfor %}
     </table>

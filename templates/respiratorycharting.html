@@ -36,24 +36,20 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>respchartid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>respchartoffset</th>
-            <th>respchartentryoffset</th>
-            <th>respcharttypecat</th>
-            <th>respchartvaluelabel</th>
-            <th>respchartvalue</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time for the respiratory value">RespChartOffset</th>
+            <th title="picklist category type for the respiratory value e.g.: respFlowSettings, respFlowPtVentData, respFlowCareData, etc">RespChartTypeCat</th>
+            <th title="the picklist row label text from respiratory value">RespChartValueLabel</th>
+            <th title="The text that was entered manually or via a interface for the given Cell Type Val Label ">RespChartValue</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.respchartid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.respchartoffset }}</td>
-            <td>{{ contact.respchartentryoffset }}</td>
-            <td>{{ contact.respcharttypecat }}</td>
-            <td>{{ contact.respchartvaluelabel }}</td>
-            <td>{{ contact.respchartvalue }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time for the respiratory value">{{ contact.respchartoffset }}</td>
+            <td title="picklist category type for the respiratory value e.g.: respFlowSettings, respFlowPtVentData, respFlowCareData, etc">{{ contact.respcharttypecat }}</td>
+            <td title="the picklist row label text from respiratory value ">{{ contact.respchartvaluelabel }}</td>
+            <td title="The text that was entered manually or via a interface for the given Cell Type Val Label ">{{ contact.respchartvalue }}</td>
         </tr>
         {% endfor %}
     </table>

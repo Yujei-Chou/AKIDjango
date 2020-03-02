@@ -36,26 +36,22 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>pasthistoryid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>pasthistoryoffset</th>
-            <th>pasthistoryenteredoffset</th>
-            <th>pasthistorynotetype</th>
-            <th>pasthistorypath</th>
-            <th>pasthistoryvalue</th>
-            <th>pasthistoryvaluetext</th>
+            <th title="病患在ICU的ID">PatientUnitStayid</th>
+            <th title="number of minutes from unit admit time for the past history item">Past History Offset</th>
+            <th title="note type for the past history item e.g.: Admission, Initial Consultation/Other, Re-Admission, etc.">Past History Note Type</th>
+            <th title="the root path of the past history item ">Past History Path</th>
+            <th title="Structured picklist of available past history items">Past History Value</th>
+            <th title="the picklist value of the past history item">Past History Value Text</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.pasthistoryid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.pasthistoryoffset }}</td>
-            <td>{{ contact.pasthistoryenteredoffset }}</td>
-            <td>{{ contact.pasthistorynotetype }}</td>
-            <td>{{ contact.pasthistorypath }}</td>
-            <td>{{ contact.pasthistoryvalue }}</td>
-            <td>{{ contact.pasthistoryvaluetext }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time for the past history item">{{ contact.pasthistoryoffset }}</td>
+            <td title="note type for the past history item e.g.: Admission, Initial Consultation/Other, Re-Admission, etc.">{{ contact.pasthistorynotetype }}</td>
+            <td title="the root path of the past history item ">{{ contact.pasthistorypath }}</td>
+            <td title="Structured picklist of available past history items">{{ contact.pasthistoryvalue }}</td>
+            <td title="the picklist value of the past history item">{{ contact.pasthistoryvaluetext }}</td>
         </tr>
         {% endfor %}
     </table>

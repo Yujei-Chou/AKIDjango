@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+<head>
+    <meta charset=”UTF-8">
+    <title>PatientInUnit</title>
+
+
+</head>
+
+<body>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+        tr td:hover {background-color:#aaaaaa;}
+        th {
+          background-color: #666666;
+          color: white;
+        }
+        {#table {#}
+        {#  border-collapse: collapse;#}
+        {#  width: 100%;#}
+        {#}#}
+        {##}
+        {#th, td {#}
+        {#  padding: 8px;#}
+        {#  text-align: left;#}
+        {#  border-bottom: 1px solid #ddd;#}
+        {#}#}
+        {#tr:hover {background-color:#f5f5f5;}#}
+    </style>
+
+    <p align="left">現在時刻： <span id="datetime"></span></p>
+    <p align="left">表格:Patient</p>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+        //document.getElementById("test").innerHTML=temp;
+
+        function LinkSamePatientID(x) {
+            var table_name=document.getElementById("tables").value;
+            console.log(table_name);
+            window.location.href="/"+table_name+"/"+x.toString();
+        }
+
+
+
+    </script>
+    <table id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>PatientUnitStayID</th>
+            <th>ApacheAdmissiondx</th>
+            <th>Unit Admit Time24</th>
+            <th>Hospital Admit Offset</th>
+            <th>Hospital Discharge Offset</th>
+            <th>Unit Discharge Offset</th>
+            <th>Admission Weight</th>
+            <th>Discharge Weight</th>
+            <th>Unit Discharge Status</th>
+            <th>Diagnosis</th>
+            <th>Past History</th>
+            <th>Treatment</th>
+            <th>Dialysis</th>
+            <th>Hematocrit</th>
+            <th>Temperature</th>
+            <th>Creatinine</th>
+            <th>Urine</th>
+            <th>Hemodynamic Data</th>
+            <th>Diastolic Blood Pressure(noninvasive)</th>
+            <th>Systolic Blood Pressure(noninvasive)</th>
+            <th>Serum Urea Nitrogen</th>
+            <th>PH</th>
+            <th>K And Ca</th>
+            <th>paO2 To FiO2 Ratio</th>
+            <th>Cumulative Dose Of Normal Saline</th>
+            <th>Estimated GFR Based On Serum Creatinine Level</th>
+            <th>Delivered Tidal Volume</th>
+            <th>Net Fluid Balance</th>
+
+        </tr>
+        </thead>
+        {% for contact in contacts %}
+        <tr>
+            <p align="left">Patient's uniquepID:{{ contact.uniquepid }}</p>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid }}</td>
+            <td title="admission diagnosis for patients unit stay">{{ contact.apacheadmissiondx }}</td>
+            <td title="進ICU的時間">{{ contact.unitadmittime24 }}</td>
+            <td title="number of minutes from unit admit time that the patient was admitted to the hospital">{{ contact.hospitaladmitoffset }}</td>
+            <td title="number of minutes from unit admit time that the patient was discharged from the hospital">{{ contact.hospitaldischargeoffset }}</td>
+            <td title="number of minutes from unit admit time that the patient was discharged from the unit">{{ contact.unitdischargeoffset }}</td>
+            <td title="進ICU時的體重">{{ contact.admissionweight }}</td>
+            <td title="離開ICU時的體重">{{ contact.dischargeweight }}</td>
+            <td title="離開ICU是否死亡">{{ contact.unitdischargestatus }}</td>
+            <td title="診斷"><a href="/diagnosis/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="病史"><a href="/pasthistory/{{ contact.patientunitstayid }}/all">ref</a></td>
+            <td title="治療"><a href="/treatment/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="set to 0 when not populated; set to 1 when it is indicated that the patient is on dialysis">{{ contact.connectID.dialysis }}</td>
+            <td title="血容比相關表格">
+                <select id="HCT_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select HCT-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/HCT">apacheApsVar</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/HCT">lab</option>
+                </select>
+            <td title="體溫相關表格">
+                <select id="Temperature_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select temperature-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/temperature">apacheApsVar</option>
+                    <option value="/nursecharting/{{ contact.patientunitstayid }}/temperature">nursecharting</option>
+                    <option value="/vitalperiodic/{{ contact.patientunitstayid }}/temperature">vitalperiodic</option>
+                </select>
+            </td>
+            <td title="肌酸酐相關表格">
+                <select id="Creatinine_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select creatinine-related table--</option>
+                    <option value="/pasthistory/{{ contact.patientunitstayid }}/creatinine">pasthistory</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/creatinine">apacheApsVar</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/creatinine">lab</option>
+                </select>
+            </td>
+            <td title="尿液相關表格">
+                <select id="Urine_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select Urine-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/urine">apacheApsVar</option>
+                    <option value="/physicalexam/{{ contact.patientunitstayid }}/urine">physicalexam</option>
+                    <option value="/intakeoutput/{{ contact.patientunitstayid }}/urine">intakeoutput</option>
+                </select>
+            </td>
+            <td title="Hemodynamic Data相關表格">
+                <select id="HemodynamicData_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select Hemodynamic Data-related table--</option>
+                    <option value="/physicalexam/{{ contact.patientunitstayid }}/Hemodynamic_Data">physicalexam</option>
+                    <option value="/vitalaperiodic/{{ contact.patientunitstayid }}/Hemodynamic_Data">vitalaperiodic(svr,svri,pvr,pvri,paop,CO)</option>
+                    <option value="/vitalperiodic/{{ contact.patientunitstayid }}/Hemodynamic_Data">vitalperiodic(cvp)</option>
+                </select>
+            </td>
+            <td title="非侵入性舒張壓相關表格">
+                <select id="diastolic_blood_pressure_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select noninvasive diastolic BP-related table--</option>
+                    <option value="/vitalaperiodic/{{ contact.patientunitstayid }}/DiastolicBP_Data">vitalaperiodic</option>
+                    <option value="/nursecharting/{{ contact.patientunitstayid }}/DiastolicBP_Data">nursecharting</option>
+                </select>
+            </td>
+            <td title="非侵入性收縮壓相關表格">
+                <select id="Systolic_blood_pressure_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select noninvasive systolic BP-related table--</option>
+                    <option value="/vitalaperiodic/{{ contact.patientunitstayid }}/SystolicBP_Data">vitalaperiodic</option>
+                    <option value="/nursecharting/{{ contact.patientunitstayid }}/SystolicBP_Data">nursecharting</option>
+                </select>
+            </td>
+            <td title="血中尿素氮相關表格">
+                <select id="BUN_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select BUN-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/BUN">apacheApsVar</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/BUN">lab</option>
+                </select>
+            </td>
+            <td title="酸鹼值相關表格">
+                <select id="PH_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select PH-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/PH">apacheApsVar</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/PH">lab</option>
+                </select>
+            </td>
+            <td title="K與Ca濃度相關表格">
+                <select id="Ca_K_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select K/Ca-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/Ca">apacheApsVar(sodium)</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/Ca_K">lab(sodium,potassium)</option>
+                </select>
+            </td>
+            <td title="PaO2與FiO2相關表格">
+                <select id="paO2_FiO2_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select paO2/FiO2-related table--</option>
+                    <option value="/apacheapsvar/{{ contact.patientunitstayid }}/paO2_FiO2">apacheApsVar(paO2,FiO2)</option>
+                    <option value="/lab/{{ contact.patientunitstayid }}/paO2_FiO2">lab(paO2,FiO2)</option>
+                </select>
+            </td>
+            <td title="normal saline相關表格">
+                <select id="NS_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">
+                    <option value="#">--select NS-related table--</option>
+                    <option value="/infusiondrug/{{ contact.patientunitstayid }}">infusiondrug</option>
+                    <option value="/intakeoutput/{{ contact.patientunitstayid }}/NS">intakeoutput</option>
+                </select>
+            </td>
+            <td title="estimated GFR相關表格"><a href="/customlab/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="Tidal Volume相關表格"><a href="/respiratorycharting/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="net fluid balance相關表格"><a href="/intakeoutput/{{ contact.patientunitstayid }}/netfluid">ref</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <p><a href="/patient/">home</a></p>
+</div>
+</body>
+</html>

@@ -36,34 +36,30 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>intakeoutputid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>intakeoutputoffset</th>
-            <th>intaketotal</th>
-            <th>outputtotal</th>
-            <th>dialysistotal</th>
-            <th>nettotal</th>
-            <th>intakeoutputentryoffset</th>
-            <th>cellpath</th>
-            <th>celllabel</th>
-            <th>cellvaluenumeric</th>
-            <th>cellvaluetext</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that the I and O value was observed">IntakeOutputOffset</th>
+            <th title="total intake value up to the current offset">IntakeTotal</th>
+            <th title="total output value up to the current offset">OutputTotal</th>
+            <th title="total dialysis value up to the current offset">DialysisTotal</th>
+            <th title="calculated net value of: intakeTotal – outputTotal + dialysisTotal">NetTotal</th>
+            <th title="the root path of info from the label in I and O ">CellPath</th>
+            <th title="The predefined row label text from I and O">CellLabel</th>
+            <th title="the value of the current I and O row">CellValueNumeric</th>
+            <th title="text conversion of the numeric value of the I and O row">CellValueText</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.intakeoutputid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.intakeoutputoffset }}</td>
-            <td>{{ contact.intaketotal }}</td>
-            <td>{{ contact.outputtotal }}</td>
-            <td>{{ contact.dialysistotal }}</td>
-            <td>{{ contact.nettotal }}</td>
-            <td>{{ contact.intakeoutputentryoffset }}</td>
-            <td>{{ contact.cellpath }}</td>
-            <td>{{ contact.celllabel }}</td>
-            <td>{{ contact.cellvaluenumeric }}</td>
-            <td>{{ contact.cellvaluetext }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the I and O value was observed">{{ contact.intakeoutputoffset }}</td>
+            <td title="total intake value up to the current offset">{{ contact.intaketotal }}</td>
+            <td title="total output value up to the current offset">{{ contact.outputtotal }}</td>
+            <td title="total dialysis value up to the current offset">{{ contact.dialysistotal }}</td>
+            <td title="calculated net value of: intakeTotal – outputTotal + dialysisTotal">{{ contact.nettotal }}</td>
+            <td title="the root path of info from the label in I and O ">{{ contact.cellpath }}</td>
+            <td title="The predefined row label text from I and O">{{ contact.celllabel }}</td>
+            <td title="the value of the current I and O row">{{ contact.cellvaluenumeric }}</td>
+            <td title="text conversion of the numeric value of the I and O row">{{ contact.cellvaluetext }}</td>
         </tr>
         {% endfor %}
     </table>

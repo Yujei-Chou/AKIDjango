@@ -36,30 +36,25 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>labid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>labresultoffset</th>
-            <th>labtypeid</th>
-            <th>labname</th>
-            <th>labresult</th>
-            <th>labresulttext</th>
-            <th>labmeasurenamesystem</th>
-            <th>labmeasurenameinterface</th>
-            <th>labresultrevisedoffset</th>
+            <th title="病患在ICU的ID"><a href="" style="color: #33ffff">PatientUnitStayID</a></th>
+            <th title="number of minutes from unit admit time that the lab value was drawn">labresultoffset</th>
+            <th title=" 1 for chemistry, 2 for drug level, 3 for hemo, 4 for misc, 5 for non-mapped, 6 for sensitive, 7 for ABG lab">labtypeid</th>
+            <th title="the picklist name of the lab">labname</th>
+            <th title="the numeric value of the lab">labresult</th>
+            <th title="the text of the lab value">labresulttext</th>
+            <th title="the measurement name of the lab">labmeasurenamesystem</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.labid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.labresultoffset }}</td>
-            <td>{{ contact.labtypeid }}</td>
-            <td>{{ contact.labname }}</td>
-            <td>{{ contact.labresult }}</td>
-            <td>{{ contact.labresulttext }}</td>
-            <td>{{ contact.labmeasurenamesystem }}</td>
-            <td>{{ contact.labmeasurenameinterface }}</td>
-            <td>{{ contact.labresultrevisedoffset }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the lab value was drawn">{{ contact.labresultoffset }}</td>
+            <td title=" 1 for chemistry, 2 for drug level, 3 for hemo, 4 for misc, 5 for non-mapped, 6 for sensitive, 7 for ABG lab">{{ contact.labtypeid }}</td>
+            <td title="the picklist name of the lab">{{ contact.labname }}</td>
+            <td title="the numeric value of the lab">{{ contact.labresult }}</td>
+            <td title="the text of the lab value">{{ contact.labresulttext }}</td>
+            <td title="the measurement name of the lab">{{ contact.labmeasurenamesystem }}</td>
+
         </tr>
         {% endfor %}
     </table>

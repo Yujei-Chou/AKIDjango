@@ -36,28 +36,26 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>infusiondrugid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>infusionoffset</th>
-            <th>drugname</th>
-            <th>drugrate</th>
-            <th>infusionrate</th>
-            <th>drugamount</th>
-            <th>volumeoffluid</th>
-            <th>patientweight</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that infusion drug column was entered">Infusion Offset</th>
+            <th title="picklist name of the infusion drug">Drug Name</th>
+            <th title="rate of the infusion drug">Drug Rate</th>
+            <th title="infusion rate of the drug">Infusion Rate</th>
+            <th title="the amount of drug given">Drug Amount</th>
+            <th title="volume of fluid for the infusion">Volume Of Fluid</th>
+            <th title="the patient weight recorded during the drug infusion in kilograms">Patient Weight</th>
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.infusiondrugid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.infusionoffset }}</td>
-            <td>{{ contact.drugname }}</td>
-            <td>{{ contact.drugrate }}</td>
-            <td>{{ contact.infusionrate }}</td>
-            <td>{{ contact.drugamount }}</td>
-            <td>{{ contact.volumeoffluid }}</td>
-            <td>{{ contact.patientweight }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that infusion drug column was entered">{{ contact.infusionoffset }}</td>
+            <td title="picklist name of the infusion drug">{{ contact.drugname }}</td>
+            <td title="rate of the infusion drug">{{ contact.drugrate }}</td>
+            <td title="infusion rate of the drug">{{ contact.infusionrate }}</td>
+            <td title="the amount of drug given">{{ contact.drugamount }}</td>
+            <td title="volume of fluid for the infusion">{{ contact.volumeoffluid }}</td>
+            <td title="the patient weight recorded during the drug infusion in kilograms">{{ contact.patientweight }}</td>
         </tr>
         {% endfor %}
     </table>

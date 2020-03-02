@@ -36,48 +36,65 @@
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>vitalperiodicid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>observationoffset</th>
-            <th>temperature</th>
-            <th>sao2</th>
-            <th>heartrate</th>
-            <th>respiration</th>
-            <th>cvp</th>
-            <th>etco2</th>
-            <th>systemicsystolic</th>
-            <th>systemicdiastolic</th>
-            <th>systemicmean</th>
-            <th>pasystolic</th>
-            <th>padiastolic</th>
-            <th>pamean</th>
-            <th>st1</th>
-            <th>st2</th>
-            <th>st3</th>
-            <th>icp</th>
+            <th title="病患在ICU的ID"><a href="" style="color: #33ffff">PatientUnitStayID</a></th>
+            <th title="number of minutes from unit admit time that the periodic value was entered">Observation Offset</th>
+
+            {% if feature == "temperature" %}
+                <th title="病患體溫(攝氏)">temperature</th>
+            {% endif %}
+            {% if feature == "Hemodynamic_Data" %}
+                <th title="中心靜脈壓">cvp</th>
+            {% endif %}
+{#            <th>vitalperiodicid</th>#}
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>observationoffset</th>#}
+{#            <th>temperature</th>#}
+{#            <th>sao2</th>#}
+{#            <th>heartrate</th>#}
+{#            <th>respiration</th>#}
+{#            <th>cvp</th>#}
+{#            <th>etco2</th>#}
+{#            <th>systemicsystolic</th>#}
+{#            <th>systemicdiastolic</th>#}
+{#            <th>systemicmean</th>#}
+{#            <th>pasystolic</th>#}
+{#            <th>padiastolic</th>#}
+{#            <th>pamean</th>#}
+{#            <th>st1</th>#}
+{#            <th>st2</th>#}
+{#            <th>st3</th>#}
+{#            <th>icp</th>#}
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.vitalperiodicid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.observationoffset }}</td>
-            <td>{{ contact.temperature }}</td>
-            <td>{{ contact.sao2 }}</td>
-            <td>{{ contact.heartrate }}</td>
-            <td>{{ contact.respiration }}</td>
-            <td>{{ contact.cvp }}</td>
-            <td>{{ contact.etco2 }}</td>
-            <td>{{ contact.systemicsystolic }}</td>
-            <td>{{ contact.systemicdiastolic }}</td>
-            <td>{{ contact.systemicmean }}</td>
-            <td>{{ contact.pasystolic }}</td>
-            <td>{{ contact.padiastolic }}</td>
-            <td>{{ contact.pamean }}</td>
-            <td>{{ contact.st1 }}</td>
-            <td>{{ contact.st2 }}</td>
-            <td>{{ contact.st3 }}</td>
-            <td>{{ contact.icp }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the periodic value was entered">{{ contact.observationoffset }}</td>
+            {% if feature == "temperature" %}
+                <td title="病患體溫(攝氏)">{{ contact.temperature }}</td>
+            {% endif %}
+            {% if feature == "Hemodynamic_Data" %}
+                <td title="中心靜脈壓">{{ contact.cvp }}</td>
+            {% endif %}
+{#            <td>{{ contact.vitalperiodicid }}</td>#}
+{#            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>#}
+{#            <td>{{ contact.observationoffset }}</td>#}
+{#            <td>{{ contact.temperature }}</td>#}
+{#            <td>{{ contact.sao2 }}</td>#}
+{#            <td>{{ contact.heartrate }}</td>#}
+{#            <td>{{ contact.respiration }}</td>#}
+{#            <td>{{ contact.cvp }}</td>#}
+{#            <td>{{ contact.etco2 }}</td>#}
+{#            <td>{{ contact.systemicsystolic }}</td>#}
+{#            <td>{{ contact.systemicdiastolic }}</td>#}
+{#            <td>{{ contact.systemicmean }}</td>#}
+{#            <td>{{ contact.pasystolic }}</td>#}
+{#            <td>{{ contact.padiastolic }}</td>#}
+{#            <td>{{ contact.pamean }}</td>#}
+{#            <td>{{ contact.st1 }}</td>#}
+{#            <td>{{ contact.st2 }}</td>#}
+{#            <td>{{ contact.st3 }}</td>#}
+{#            <td>{{ contact.icp }}</td>#}
         </tr>
         {% endfor %}
     </table>

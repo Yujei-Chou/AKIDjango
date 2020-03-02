@@ -27,45 +27,79 @@
 
     <p align="left">現在時刻： <span id="datetime"></span></p>
     <p align="left">表格:Vitalaperiodic</p>
+
     <script>
         var dt = new Date();
         document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
 
 
     </script>
+
     <table border="1" style="width: 100%">
         <thead>
         <tr>
-            <th>vitalaperiodicid</th>
-            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>
-            <th>observationoffset</th>
-            <th>noninvasivesystolic</th>
-            <th>noninvasivediastolic</th>
-            <th>noninvasivemean</th>
-            <th>paop</th>
-            <th>cardiacoutput</th>
-            <th>cardiacinput</th>
-            <th>svr</th>
-            <th>svri</th>
-            <th>pvr</th>
-            <th>pvri</th>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that the aperiodic value was entered">Observation Offset</th>
+            {% if feature == "Hemodynamic_Data" %}
+                <th title="全身血管阻力">svr</th>
+                <th title="全身血管阻力指數">svri</th>
+                <th title="周邊血管阻力">pvr</th>
+                <th title="周邊血管阻力指數">pvri</th>
+                <th title="肺動脈阻塞壓">paop</th>
+                <th title="心輸出量">cardiacoutput</th>
+            {% endif %}
+            {% if feature == "DiastolicBP_Data" %}
+                <th title="非侵入性舒張壓值">Noninvasive Diastolic Blood Pressure</th>
+            {% endif %}
+            {% if feature == "SystolicBP_Data" %}
+                <th title="非侵入性收縮壓值">Noninvasive Systolic Blood Pressure</th>
+            {% endif %}
+{#            <th>vitalaperiodicid</th>#}
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>observationoffset</th>#}
+{#            <th>noninvasivesystolic</th>#}
+{#            <th>noninvasivediastolic</th>#}
+{#            <th>noninvasivemean</th>#}
+{#            <th>paop</th>#}
+{#            <th>cardiacoutput</th>#}
+{#            <th>cardiacinput</th>#}
+{#            <th>svr</th>#}
+{#            <th>svri</th>#}
+{#            <th>pvr</th>#}
+{#            <th>pvri</th>#}
         </tr>
         </thead>
         {% for contact in contacts %}
         <tr>
-            <td>{{ contact.vitalaperiodicid }}</td>
-            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>
-            <td>{{ contact.observationoffset }}</td>
-            <td>{{ contact.noninvasivesystolic }}</td>
-            <td>{{ contact.noninvasivediastolic }}</td>
-            <td>{{ contact.noninvasivemean }}</td>
-            <td>{{ contact.paop }}</td>
-            <td>{{ contact.cardiacoutput }}</td>
-            <td>{{ contact.cardiacinput }}</td>
-            <td>{{ contact.svr }}</td>
-            <td>{{ contact.svri }}</td>
-            <td>{{ contact.pvr }}</td>
-            <td>{{ contact.pvri }}</td>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the aperiodic value was entered">{{ contact.observationoffset }}</td>
+            {% if feature == "Hemodynamic_Data" %}
+                <td title="全身血管阻力">{{ contact.svr }}</td>
+                <td title="全身血管阻力指數">{{ contact.svri }}</td>
+                <td title="周邊血管阻力">{{ contact.pvr }}</td>
+                <td title="周邊血管阻力指數">{{ contact.pvri }}</td>
+                <td title="肺動脈阻塞壓">{{ contact.paop }}</td>
+                <td title="心輸出量">{{ contact.cardiacoutput }}</td>
+            {% endif %}
+            {% if feature == "DiastolicBP_Data" %}
+                <td title="非侵入性舒張壓值">{{ contact.noninvasivediastolic }}</td>
+            {% endif %}
+            {% if feature == "SystolicBP_Data" %}
+                <td title="非侵入性收縮壓值">{{ contact.noninvasivesystolic }}</td>
+            {% endif %}
+{#            <td>{{ contact.vitalaperiodicid }}</td>#}
+{#            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>#}
+{#            <td>{{ contact.observationoffset }}</td>#}
+{#            <td>{{ contact.noninvasivesystolic }}</td>#}
+{#            <td>{{ contact.noninvasivediastolic }}</td>#}
+{#            <td>{{ contact.noninvasivemean }}</td>#}
+{#            <td>{{ contact.paop }}</td>#}
+{#            <td>{{ contact.cardiacoutput }}</td>#}
+{#            <td>{{ contact.cardiacinput }}</td>#}
+{#            <td>{{ contact.svr }}</td>#}
+{#            <td>{{ contact.svri }}</td>#}
+{#            <td>{{ contact.pvr }}</td>#}
+{#            <td>{{ contact.pvri }}</td>#}
         </tr>
         {% endfor %}
     </table>
