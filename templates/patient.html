@@ -9,39 +9,6 @@
 </head>
 
 <body>
-{#    <label>選擇表格:</label>#}
-{#    <select id="tables">#}
-{#        <option value="admissiondrug">AdmissionDrug</option>#}
-{#        <option value="admissiondx">Admissiondx</option>#}
-{#        <option value="allergy">Allergy</option>#}
-{#        <option value="apacheapsvar">Apacheapsvar</option>#}
-{#        <option value="apachepatientresult">Apachepatientresult</option>#}
-{#        <option value="apachepredvar">Apachepredvar</option>#}
-{#        <option value="careplancareprovider">Careplancareprovider</option>#}
-{#        <option value="careplaneol">Careplaneol</option>#}
-{#        <option value="careplangeneral">Careplangeneral</option>#}
-{#        <option value="careplangoal">Careplangoal</option>#}
-{#        <option value="careplaninfectiousdisease">Careplaninfectiousdisease</option>#}
-{#        <option value="customlab">Customlab</option>#}
-{#        <option value="diagnosis">Diagnosis</option>#}
-{#        <option value="infusiondrug">Infusiondrug</option>#}
-{#        <option value="intakeoutput">Intakeoutput</option>#}
-{#        <option value="lab">Lab</option>#}
-{#        <option value="medication">Medication</option>#}
-{#        <option value="microlab">Microlab</option>#}
-{#        <option value="note">Note</option>#}
-{#        <option value="nurseassessment">Nurseassessment</option>#}
-{#        <option value="nursecare">Nursecare</option>#}
-{#        <option value="nursecharting">Nursecharting</option>#}
-{#        <option value="pasthistory">Pasthistory</option>#}
-{#        <option value="patient">Patient</option>#}
-{#        <option value="physicalexam">Physicalexam</option>#}
-{#        <option value="respiratorycare">Respiratorycare</option>#}
-{#        <option value="respiratorycharting">Respiratorycharting</option>#}
-{#        <option value="treatment">Treatment</option>#}
-{#        <option value="vitalaperiodic">Vitalaperiodic</option>#}
-{#        <option value="vitalperiodic">Vitalperiodic</option>#}
-{#    </select>#}
     <style>
         body {
           margin: 0;
@@ -51,7 +18,7 @@
         .header {
           overflow: hidden;
           background-color: #006550;
-          padding: 16px 10px;
+          {#padding: 16px 10px;#}
         }
         * {
           font-family: sans-serif; /* Change your font family */
@@ -59,7 +26,9 @@
 
         .header a {
           text-align: center;
-          padding: 8px 5px;
+          float: left;
+          padding: 10px 16px;
+
         }
         .header a:hover{
             background-color: #aaaaaa;
@@ -71,7 +40,7 @@
           font-size: 0.9em;
           min-width: 400px;
           border-radius: 5px 5px 0 0;
-          overflow: hidden;
+          overflow: visible;
           box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -145,36 +114,79 @@
 
         .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
-        {#table {#}
-        {#  border-collapse: collapse;#}
-        {#}#}
-        {##}
-        {#table, th, td {#}
-        {#  border: 1px solid black;#}
-        {#}#}
-        {#tr td:hover {background-color:#aaaaaa;}#}
-        {#th {#}
-        {#  background-color: #666666;#}
-        {#  color: white;#}
+        .dropdown_header {
+            overflow: hidden;
+            float: right;
+        }
+
+        .dropdown_header .dropbtn_header {
+          font-size: 24px;
+          border: none;
+          outline: none;
+          color: white;
+          padding: 10px 16px;
+          background-color: inherit;
+          font-family: inherit;
+          margin: 0;
+        }
+
+        .haeder a:hover, .dropdown_header:hover .dropbtn_header {
+          background-color: #aaaaaa;
+        }
+
+        .dropdown-content_header {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content_header a {
+          float: none;
+          color: black;
+          padding: 6px 8px;
+          min-width: 150px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+        }
+
+        .dropdown-content_header a:hover {
+          background-color: #ddd;
+        }
+
+        .dropdown_header:hover .dropdown-content_header {
+          display: block;
+        }
+
 
     </style>
 
 {#    <p align="left">現在時刻： <span id="datetime"></span></p>#}
     <div class="header">
-        <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:24px" title="home"></i></a>
-        <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:24px;text-decoration: none">eicu website</a>
+        <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:20px" title="home"></i></a>
+        <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:20px;text-decoration: none">eicu website</a>
+        <div class="dropdown_header" style="float: left">
+            <button class="dropbtn_header" style="color:white;font-size:20px;text-decoration: none">patients' type
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content_header">
+                <a href="/OnlyAKIPatient" >AKI Patients</a>
+                <a href="/patient">All Patients</a>
+            </div>
+        </div>
+        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Patient</a>
     </div>
-    <p class="content-p" align="left">表格:Patient</p>
-    <form id="checkbox_form">
-        <p align="left">
-            {% if state == "AKIPatients" %}
-                <input type="checkbox" id="forAKIPatients" onclick="ChangeToAKIPatients()">AKI Patients
-            {% endif %}
-            {% if state == "AllPatients" %}
-                <input type="checkbox" id="forAllPatients" onclick="ChangeToALLPatients()">All Patients
-            {% endif %}
-        </p>
+
+    <p></p>
+    <form class="searchbox" style="margin:auto;max-width:300px;float: left">
+      <input type="text" placeholder="PatientUnitStayID" name="search" id="searchtxt">
+      <button type="button" onclick=SearchID()><i class="fa fa-search"></i></button>
+      <p></p>
     </form>
+
     <script>
 
         var dt = new Date();
@@ -186,16 +198,18 @@
             console.log(table_name);
             window.location.href="/"+table_name+"/"+x.toString();
         }
-        function ChangeToAKIPatients() {
-            window.location.href="/OnlyAKIPatient";
+        function SearchID() {
+            var ID = document.getElementById("searchtxt").value;
+            console.log(ID);
+            window.location.href="/PatientInUnit/"+ID.toString();
         }
-        function ChangeToALLPatients() {
-            window.location.href="/patient";
-        }
+
 
 
 
     </script>
+
+
     <table class="content-table" id="datatable" border="1" style="width: 100%">
         <thead>
         <tr>
@@ -218,16 +232,6 @@
                 <td title="性別">{{ contact.gender }}</td>
                 <td title="年紀">{{ contact.age }}</td>
                 <td title="身高">{{ contact.admissionheight }}</td>
-{#                <td title="病患入院時所對應的ID">#}
-{#                    <select id="Patient_select" onchange="window.document.location.href=this.options[this.selectedIndex].value;">#}
-{#                        <option value="--select PatientHealthSystemStayID--">--select PatientHealthSystemStayID--</option>#}
-{#                        {% for data in contact.uniquepid|filterHospitalID %}#}
-{#                            {% ifchanged data.patienthealthsystemstayid %}#}
-{#                                <option value="/PatientInHospital/{{ data.patienthealthsystemstayid }}">{{ data.patienthealthsystemstayid }}</option>#}
-{#                            {% endifchanged %}#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-{#                </td>#}
                 <td title="病患入院時所對應的ID">
                 <div class="dropdown">
                     <button class="dropbtn">Dropdown<i class="fa fa-caret-down"></i></button>

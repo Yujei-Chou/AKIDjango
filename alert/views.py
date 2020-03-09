@@ -5,56 +5,6 @@ from alert import models
 from django.core.paginator import Paginator
 from django.db.models import Q
 import pandas as pd
-import numpy as np
-# # for rest_framework
-# from alert.serializers import PatientSerializer
-# from rest_framework import viewsets
-# from rest_framework import viewsets, status
-# from rest_framework.response import Response
-#
-# from django.template.response import TemplateResponse
-# from django.http.response import HttpResponse
-# from alert.models import query_alert_by_args
-# # Create your views here.
-
-
-# def patient(request):
-#     html = TemplateResponse(request ,'patient.html')
-#     return HttpResponse(html.render())
-#
-# class PatientViewSet(viewsets.ModelViewSet):
-#     queryset = models.Patient.objects.all()
-#     serializer_class = PatientSerializer
-#
-#     def list(self, request, **kwargs):
-#         try:
-#             music = query_alert_by_args(**request.query_params)
-#             serializer = PatientSerializer(patient['items'], many=True)
-#             result = dict()
-#             result['data'] = serializer.data
-#             result['draw'] = patient['draw']
-#             result['recordsTotal'] = patient['total']
-#             result['recordsFiltered'] = patient['count']
-#             return Response(result, status=status.HTTP_200_OK, template_name=None, content_type=None)
-#
-#         except Exception as e:
-#             return Response(e, status=status.HTTP_404_NOT_FOUND, template_name=None, content_type=None)
-
-
-# def patient(req):
-#     users_list = []
-#     res = models.Patient.objects.all()
-#     for item in res:
-#         user_info = {
-#             "patientunitstayid":item.patientunitstayid,
-#             "age":item.age,
-#             "gender":item.gender,
-#         }
-#         users_list.append(user_info)
-#     user_dic = {}
-#     print(users_list)
-#     user_dic["data"] = users_list#按照官方文件的格式寫
-#     return HttpResponse(json.dumps(user_dic))
 
 def hello_view(request):
     return render(request, 'hello_django.html', {
@@ -62,8 +12,9 @@ def hello_view(request):
     })
 
 def patient(request):
-    SampleAllPatients_df = pd.read_csv("./AKIPatient/SampleAllPatients.csv", sep=',', header=0, encoding='utf-8')
-    articles = models.Patient.objects.filter(patientunitstayid__in=SampleAllPatients_df['patientunitstayid']).order_by('uniquepid')
+    # SampleAllPatients_df = pd.read_csv("./AKIPatient/SampleAllPatients.csv", sep=',', header=0, encoding='utf-8')
+    # articles = models.Patient.objects.filter(patientunitstayid__in=SampleAllPatients_df['patientunitstayid']).order_by('uniquepid')
+    articles = models.Patient.objects.all().order_by('uniquepid')
     paginator = Paginator(articles, 30)
     page = request.GET.get('page')
     contacts = paginator.get_page(page)
