@@ -38,9 +38,24 @@ def onlyAKIpatient(request):
         'state': state,
     }
     return render(request, "patient.html", context)
-def filterUnitID(request, num):
-    ICUList = models.Patient.objects.filter(uniquepid=num)
-    return render(request, "patient.html", {'ICUList': ICUList})
+
+def featureresult(request):
+    articles = models.Allpt.objects.all()
+    paginator = Paginator(articles, 30)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
+    context = {'contacts': contacts}
+
+    return render(request, "featureresult.html", context)
+
+def queryfeatureresult(request,num):
+    articles = models.Allpt.objects.filter(patientunitstayid=num)
+    paginator = Paginator(articles, 30)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
+    context = {'contacts': contacts}
+
+    return render(request, "featureresult.html", context)
 
 def admissiondrug(request,num):
     #articles = models.Admissiondrug.objects.all()

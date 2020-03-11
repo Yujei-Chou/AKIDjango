@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+<head>
+    <meta charset=”UTF-8">
+    <title>Feature</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+          overflow: hidden;
+          background-color: #006550;
+          {#padding: 16px 10px;#}
+        }
+        * {
+          font-family: sans-serif; /* Change your font family */
+        }
+
+        .header a {
+          text-align: center;
+          float: left;
+          padding: 10px 16px;
+
+        }
+        .header a:hover{
+            background-color: #aaaaaa;
+        }
+
+        .content-table {
+          border-collapse: collapse;
+          margin: 25px 0;
+          font-size: 0.9em;
+          min-width: 400px;
+          border-radius: 5px 5px 0 0;
+          overflow: visible;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+        .content-table tbody tr:hover {
+            background-color:#aaaaaa;
+        }
+
+        .content-p {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .dropbtn {
+          background-color: #009879;
+          color: white;
+          padding: 2px;
+          font-size: 0.9em;
+          font-weight: bold;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 6px 8px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+        .dropdown_header {
+            overflow: hidden;
+            float: right;
+        }
+
+        .dropdown_header .dropbtn_header {
+          font-size: 24px;
+          border: none;
+          outline: none;
+          color: white;
+          padding: 10px 16px;
+          background-color: inherit;
+          font-family: inherit;
+          margin: 0;
+        }
+
+        .haeder a:hover, .dropdown_header:hover .dropbtn_header {
+          background-color: #aaaaaa;
+        }
+
+        .dropdown-content_header {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content_header a {
+          float: none;
+          color: black;
+          padding: 6px 8px;
+          min-width: 150px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+        }
+
+        .dropdown-content_header a:hover {
+          background-color: #ddd;
+        }
+
+        .dropdown_header:hover .dropdown-content_header {
+          display: block;
+        }
+
+    </style>
+
+{#    <p align="left">現在時刻： <span id="datetime"></span></p>#}
+    <div class="header">
+        <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:20px" title="home"></i></a>
+        <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:20px;text-decoration: none">eicu website</a>
+        <div class="dropdown_header" style="float: left">
+            <button class="dropbtn_header" style="color:white;font-size:20px;text-decoration: none">patients' type
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content_header">
+                <a href="/OnlyAKIPatient" >AKI Patients</a>
+                <a href="/patient">All Patients</a>
+            </div>
+        </div>
+        <a href="/featureresult" style="color:white;font-size:20px;text-decoration: none">model's feature</a>
+        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Patient</a>
+    </div>
+
+    <p></p>
+    <form class="searchbox" style="margin:auto;max-width:300px;float: left">
+      <input type="text" placeholder="PatientUnitStayID" name="search" id="searchtxt">
+      <button type="button" onclick=SearchID()><i class="fa fa-search"></i></button>
+      <p></p>
+    </form>
+
+    <script>
+        function SearchID() {
+            var ID = document.getElementById("searchtxt").value;
+            console.log(ID);
+            window.location.href="/featureresult/"+ID.toString();
+        }
+
+
+
+    </script>
+    <table class="content-table" id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>PatientUnitStayID</th>
+            <th>IsAKI</th>
+            <th>Age</th>
+            <th>Nettotal</th>
+            <th>Potassium_0</th>
+            <th>Potassium_1</th>
+            <th>Sodium_0</th>
+            <th>Sodium_1</th>
+            <th>Hct_0</th>
+            <th>Hct_1</th>
+            <th>BUN_0</th>
+            <th>BUN_1</th>
+            <th>pH_0</th>
+            <th>pH_1</th>
+            <th>OI_0</th>
+            <th>OI_1</th>
+            <th>Temp_0</th>
+            <th>Temp_1</th>
+            <th>Temp_2</th>
+            <th>Temp_3</th>
+            <th>Temp_4</th>
+            <th>Temp_5</th>
+            <th>Urine_0</th>
+            <th>Urine_1</th>
+            <th>Urine_2</th>
+            <th>Urine_3</th>
+            <th>Urine_4</th>
+            <th>Urine_5</th>
+            <th>DiastolicBP_0</th>
+            <th>DiastolicBP_1</th>
+            <th>DiastolicBP_2</th>
+            <th>DiastolicBP_3</th>
+            <th>DiastolicBP_4</th>
+            <th>DiastolicBP_5</th>
+            <th>DiastolicBP_6</th>
+            <th>DiastolicBP_7</th>
+            <th>DiastolicBP_8</th>
+            <th>DiastolicBP_9</th>
+            <th>DiastolicBP_10</th>
+            <th>DiastolicBP_11</th>
+            <th>DiastolicBP_12</th>
+            <th>DiastolicBP_13</th>
+            <th>DiastolicBP_14</th>
+            <th>DiastolicBP_15</th>
+            <th>DiastolicBP_16</th>
+            <th>DiastolicBP_17</th>
+            <th>DiastolicBP_18</th>
+            <th>DiastolicBP_19</th>
+            <th>SystolicBP_0</th>
+            <th>SystolicBP_1</th>
+            <th>SystolicBP_2</th>
+            <th>SystolicBP_3</th>
+            <th>SystolicBP_4</th>
+            <th>SystolicBP_5</th>
+            <th>SystolicBP_6</th>
+            <th>SystolicBP_7</th>
+            <th>SystolicBP_8</th>
+            <th>SystolicBP_9</th>
+            <th>SystolicBP_10</th>
+            <th>SystolicBP_11</th>
+            <th>SystolicBP_12</th>
+            <th>SystolicBP_13</th>
+            <th>SystolicBP_14</th>
+            <th>SystolicBP_15</th>
+            <th>SystolicBP_16</th>
+            <th>SystolicBP_17</th>
+            <th>SystolicBP_18</th>
+            <th>SystolicBP_19</th>
+            <th>PulseP_0</th>
+            <th>PulseP_1</th>
+            <th>PulseP_2</th>
+            <th>PulseP_3</th>
+            <th>PulseP_4</th>
+            <th>PulseP_5</th>
+            <th>PulseP_6</th>
+            <th>PulseP_7</th>
+            <th>PulseP_8</th>
+            <th>PulseP_9</th>
+            <th>PulseP_10</th>
+            <th>PulseP_11</th>
+            <th>PulseP_12</th>
+            <th>PulseP_13</th>
+            <th>PulseP_14</th>
+            <th>PulseP_15</th>
+            <th>PulseP_16</th>
+            <th>PulseP_17</th>
+            <th>PulseP_18</th>
+            <th>PulseP_19</th>
+            <th>ShockID_0</th>
+            <th>ShockID_1</th>
+            <th>ShockID_2</th>
+            <th>ShockID_3</th>
+            <th>ShockID_4</th>
+            <th>ShockID_5</th>
+            <th>ShockID_6</th>
+            <th>ShockID_7</th>
+            <th>ShockID_8</th>
+            <th>ShockID_9</th>
+            <th>ShockID_10</th>
+            <th>ShockID_11</th>
+            <th>MeanBP_0</th>
+            <th>MeanBP_1</th>
+            <th>MeanBP_2</th>
+            <th>MeanBP_3</th>
+            <th>MeanBP_4</th>
+            <th>MeanBP_5</th>
+            <th>MeanBP_6</th>
+            <th>MeanBP_7</th>
+            <th>MeanBP_8</th>
+            <th>MeanBP_9</th>
+            <th>MeanBP_10</th>
+            <th>MeanBP_11</th>
+            <th>MeanBP_12</th>
+            <th>MeanBP_13</th>
+            <th>MeanBP_14</th>
+            <th>MeanBP_15</th>
+            <th>MeanBP_16</th>
+            <th>MeanBP_17</th>
+            <th>MeanBP_18</th>
+            <th>MeanBP_19</th>
+            <th>TidalVolume_0</th>
+            <th>TidalVolume_1</th>
+            <th>TidalVolume_2</th>
+            <th>TidalVolume_3</th>
+            <th>NS_0</th>
+            <th>NS_1</th>
+            <th>NS_2</th>
+            <th>NS_3</th>
+            <th>NS_4</th>
+            <th>Weight</th>
+            <th>Creatinine_0</th>
+            <th>Creatinine_1</th>
+            <th>GFR_0</th>
+            <th>GFR_1</th>
+            <th>Death</th>
+            <th>IsDialysis</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.patientunitstayid }}</td>
+            <td title="是否有AKI，0:無  1:有">{{ contact.aki }}</td>
+            <td>{{ contact.age }}</td>
+            <td title="net fluid balance">{{ contact.nettotal }}</td>
+            <td>{{ contact.potassium_0 }}</td>
+            <td>{{ contact.potassium_1 }}</td>
+            <td>{{ contact.sodium_0 }}</td>
+            <td>{{ contact.sodium_1 }}</td>
+            <td>{{ contact.hct_0 }}</td>
+            <td>{{ contact.hct_1 }}</td>
+            <td>{{ contact.bun_0 }}</td>
+            <td>{{ contact.bun_1 }}</td>
+            <td>{{ contact.ph_0 }}</td>
+            <td>{{ contact.ph_1 }}</td>
+            <td title="Pao2/Fio2：氧合指數">{{ contact.oi_0 }}</td>
+            <td title="Pao2/Fio2：氧合指數">{{ contact.oi_1 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_0 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_1 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_2 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_3 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_4 }}</td>
+            <td title="溫度(攝氏)">{{ contact.tp_5 }}</td>
+            <td>{{ contact.urine_0 }}</td>
+            <td>{{ contact.urine_1 }}</td>
+            <td>{{ contact.urine_2 }}</td>
+            <td>{{ contact.urine_3 }}</td>
+            <td>{{ contact.urine_4 }}</td>
+            <td>{{ contact.urine_5 }}</td>
+            <td>{{ contact.diastolicbp_0 }}</td>
+            <td>{{ contact.diastolicbp_1 }}</td>
+            <td>{{ contact.diastolicbp_2 }}</td>
+            <td>{{ contact.diastolicbp_3 }}</td>
+            <td>{{ contact.diastolicbp_4 }}</td>
+            <td>{{ contact.diastolicbp_5 }}</td>
+            <td>{{ contact.diastolicbp_6 }}</td>
+            <td>{{ contact.diastolicbp_7 }}</td>
+            <td>{{ contact.diastolicbp_8 }}</td>
+            <td>{{ contact.diastolicbp_9 }}</td>
+            <td>{{ contact.diastolicbp10 }}</td>
+            <td>{{ contact.diastolicbp11 }}</td>
+            <td>{{ contact.diastolicbp12 }}</td>
+            <td>{{ contact.diastolicbp13 }}</td>
+            <td>{{ contact.diastolicbp14 }}</td>
+            <td>{{ contact.diastolicbp15 }}</td>
+            <td>{{ contact.diastolicbp16 }}</td>
+            <td>{{ contact.diastolicbp17 }}</td>
+            <td>{{ contact.diastolicbp18 }}</td>
+            <td>{{ contact.diastolicbp19 }}</td>
+            <td>{{ contact.systolicbp_0 }}</td>
+            <td>{{ contact.systolicbp_1 }}</td>
+            <td>{{ contact.systolicbp_2 }}</td>
+            <td>{{ contact.systolicbp_3 }}</td>
+            <td>{{ contact.systolicbp_4 }}</td>
+            <td>{{ contact.systolicbp_5 }}</td>
+            <td>{{ contact.systolicbp_6 }}</td>
+            <td>{{ contact.systolicbp_7 }}</td>
+            <td>{{ contact.systolicbp_8 }}</td>
+            <td>{{ contact.systolicbp_9 }}</td>
+            <td>{{ contact.systolicbp10 }}</td>
+            <td>{{ contact.systolicbp11 }}</td>
+            <td>{{ contact.systolicbp12 }}</td>
+            <td>{{ contact.systolicbp13 }}</td>
+            <td>{{ contact.systolicbp14 }}</td>
+            <td>{{ contact.systolicbp15 }}</td>
+            <td>{{ contact.systolicbp16 }}</td>
+            <td>{{ contact.systolicbp17 }}</td>
+            <td>{{ contact.systolicbp18 }}</td>
+            <td>{{ contact.systolicbp19 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_0 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_1 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_2 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_3 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_4 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_5 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_6 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_7 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_8 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep_9 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep10 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep11 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep12 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep13 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep14 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep15 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep16 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep17 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep18 }}</td>
+            <td title="脈壓:收縮壓-舒張壓">{{ contact.pulsep19 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_0 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_1 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_2 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_3 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_4 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_5 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_6 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_7 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_8 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid_9 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid10 }}</td>
+            <td title="Shock Index:HR/SBP">{{ contact.shockid11 }}</td>
+            <td>{{ contact.meanbp_0 }}</td>
+            <td>{{ contact.meanbp_1 }}</td>
+            <td>{{ contact.meanbp_2 }}</td>
+            <td>{{ contact.meanbp_3 }}</td>
+            <td>{{ contact.meanbp_4 }}</td>
+            <td>{{ contact.meanbp_5 }}</td>
+            <td>{{ contact.meanbp_6 }}</td>
+            <td>{{ contact.meanbp_7 }}</td>
+            <td>{{ contact.meanbp_8 }}</td>
+            <td>{{ contact.meanbp_9 }}</td>
+            <td>{{ contact.meanbp10 }}</td>
+            <td>{{ contact.meanbp11 }}</td>
+            <td>{{ contact.meanbp12 }}</td>
+            <td>{{ contact.meanbp13 }}</td>
+            <td>{{ contact.meanbp14 }}</td>
+            <td>{{ contact.meanbp15 }}</td>
+            <td>{{ contact.meanbp16 }}</td>
+            <td>{{ contact.meanbp17 }}</td>
+            <td>{{ contact.meanbp18 }}</td>
+            <td>{{ contact.meanbp19 }}</td>
+            <td>{{ contact.tv_0 }}</td>
+            <td>{{ contact.tv_1 }}</td>
+            <td>{{ contact.tv_2 }}</td>
+            <td>{{ contact.tv_3 }}</td>
+            <td>{{ contact.ns_0 }}</td>
+            <td>{{ contact.ns_1 }}</td>
+            <td>{{ contact.ns_2 }}</td>
+            <td>{{ contact.ns_3 }}</td>
+            <td>{{ contact.ns_4 }}</td>
+            <td>{{ contact.weight_0 }}</td>
+            <td>{{ contact.creatinine_0 }}</td>
+            <td>{{ contact.creatinine_1 }}</td>
+            <td>{{ contact.gfr_0 }}</td>
+            <td>{{ contact.gfr_1 }}</td>
+            <td>{{ contact.death }}</td>
+            <td>{{ contact.isdialysis }}</td>
+
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>
+</html>

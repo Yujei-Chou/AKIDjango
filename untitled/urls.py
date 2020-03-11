@@ -56,6 +56,8 @@ urlpatterns = [
     path('OnlyAKIPatient/', views.onlyAKIpatient),
     path('PatientInHospital/<str:num>', views.PatientInHospital),
     path('PatientInUnit/<str:num>', views.PatientInUnit),
+    path('featureresult/',views.featureresult),
+    path('featureresult/<str:num>',views.queryfeatureresult),
     path('linkHospital/<str:num>',views.linkHospital),
 
 ]

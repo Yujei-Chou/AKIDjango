@@ -626,40 +626,144 @@ class Vitalperiodic(models.Model):
         managed = False
         db_table = 'vitalperiodic'
 
-# ORDER_COLUMN_CHOICES = Choices(
-#     ('0', 'id'),
-#     ('1', 'patientunitstayid'),
-#     ('2', 'gender'),
-#     ('3', 'age'),
-# )
-#
-# def query_alert_by_args(**kwargs):
-#     draw = int(kwargs.get('draw', None)[0])
-#     length = int(kwargs.get('length', None)[0])
-#     start = int(kwargs.get('start', None)[0])
-#     search_value = kwargs.get('search[value]', None)[0]
-#     order_column = kwargs.get('order[0][column]', None)[0]
-#     order = kwargs.get('order[0][dir]', None)[0]
-#
-#     order_column = ORDER_COLUMN_CHOICES[order_column]
-#     # django orm '-' -> desc
-#     if order == 'desc':
-#         order_column = '-' + order_column
-#
-#     queryset = Patient.objects.all()
-#     total = queryset.count()
-#
-#     if search_value:
-#         queryset = queryset.filter(Q(id__icontains=search_value) |
-#                                         Q(patientunitstayid__icontains=search_value) |
-#                                         Q(gender__icontains=search_value) |
-#                                         Q(age__icontains=search_value))
-#
-#     count = queryset.count()
-#     queryset = queryset.order_by(order_column)[start:start + length]
-#     return {
-#         'items': queryset,
-#         'count': count,
-#         'total': total,
-#         'draw': draw
-#     }
+class Allpt(models.Model):
+    patientunitstayid = models.BigIntegerField(primary_key=True)
+    age = models.FloatField(blank=True, null=True)
+    nettotal = models.FloatField(blank=True, null=True)
+    potassium_0 = models.FloatField(db_column='potassium 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    potassium_1 = models.FloatField(db_column='potassium 1', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    sodium_0 = models.FloatField(db_column='sodium 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    sodium_1 = models.FloatField(db_column='sodium 1', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    hct_0 = models.FloatField(db_column='Hct 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    hct_1 = models.FloatField(db_column='Hct 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    bun_0 = models.FloatField(db_column='BUN 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    bun_1 = models.FloatField(db_column='BUN 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ph_0 = models.FloatField(db_column='pH 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ph_1 = models.FloatField(db_column='pH 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    oi_0 = models.FloatField(db_column='OI 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    oi_1 = models.FloatField(db_column='OI 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_0 = models.FloatField(db_column='TP 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_1 = models.FloatField(db_column='TP 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_2 = models.FloatField(db_column='TP 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_3 = models.FloatField(db_column='TP 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_4 = models.FloatField(db_column='TP 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tp_5 = models.FloatField(db_column='TP 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    urine_0 = models.FloatField(db_column='urine 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    urine_1 = models.FloatField(db_column='urine 1', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    urine_2 = models.FloatField(db_column='urine 2', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    urine_3 = models.FloatField(db_column='urine 3', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    urine_4 = models.FloatField(db_column='urine 4', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    urine_5 = models.FloatField(db_column='urine 5', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    diastolicbp_0 = models.FloatField(db_column='diastolicBP 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_1 = models.FloatField(db_column='diastolicBP 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_2 = models.FloatField(db_column='diastolicBP 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_3 = models.FloatField(db_column='diastolicBP 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_4 = models.FloatField(db_column='diastolicBP 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_5 = models.FloatField(db_column='diastolicBP 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_6 = models.FloatField(db_column='diastolicBP 6', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_7 = models.FloatField(db_column='diastolicBP 7', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_8 = models.FloatField(db_column='diastolicBP 8', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp_9 = models.FloatField(db_column='diastolicBP 9', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    diastolicbp10 = models.FloatField(db_column='diastolicBP10', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp11 = models.FloatField(db_column='diastolicBP11', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp12 = models.FloatField(db_column='diastolicBP12', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp13 = models.FloatField(db_column='diastolicBP13', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp14 = models.FloatField(db_column='diastolicBP14', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp15 = models.FloatField(db_column='diastolicBP15', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp16 = models.FloatField(db_column='diastolicBP16', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp17 = models.FloatField(db_column='diastolicBP17', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp18 = models.FloatField(db_column='diastolicBP18', blank=True, null=True)  # Field name made lowercase.
+    diastolicbp19 = models.FloatField(db_column='diastolicBP19', blank=True, null=True)  # Field name made lowercase.
+    systolicbp_0 = models.FloatField(db_column='systolicBP 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_1 = models.FloatField(db_column='systolicBP 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_2 = models.FloatField(db_column='systolicBP 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_3 = models.FloatField(db_column='systolicBP 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_4 = models.FloatField(db_column='systolicBP 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_5 = models.FloatField(db_column='systolicBP 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_6 = models.FloatField(db_column='systolicBP 6', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_7 = models.FloatField(db_column='systolicBP 7', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_8 = models.FloatField(db_column='systolicBP 8', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp_9 = models.FloatField(db_column='systolicBP 9', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    systolicbp10 = models.FloatField(db_column='systolicBP10', blank=True, null=True)  # Field name made lowercase.
+    systolicbp11 = models.FloatField(db_column='systolicBP11', blank=True, null=True)  # Field name made lowercase.
+    systolicbp12 = models.FloatField(db_column='systolicBP12', blank=True, null=True)  # Field name made lowercase.
+    systolicbp13 = models.FloatField(db_column='systolicBP13', blank=True, null=True)  # Field name made lowercase.
+    systolicbp14 = models.FloatField(db_column='systolicBP14', blank=True, null=True)  # Field name made lowercase.
+    systolicbp15 = models.FloatField(db_column='systolicBP15', blank=True, null=True)  # Field name made lowercase.
+    systolicbp16 = models.FloatField(db_column='systolicBP16', blank=True, null=True)  # Field name made lowercase.
+    systolicbp17 = models.FloatField(db_column='systolicBP17', blank=True, null=True)  # Field name made lowercase.
+    systolicbp18 = models.FloatField(db_column='systolicBP18', blank=True, null=True)  # Field name made lowercase.
+    systolicbp19 = models.FloatField(db_column='systolicBP19', blank=True, null=True)  # Field name made lowercase.
+    pulsep_0 = models.FloatField(db_column='pulseP 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_1 = models.FloatField(db_column='pulseP 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_2 = models.FloatField(db_column='pulseP 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_3 = models.FloatField(db_column='pulseP 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_4 = models.FloatField(db_column='pulseP 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_5 = models.FloatField(db_column='pulseP 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_6 = models.FloatField(db_column='pulseP 6', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_7 = models.FloatField(db_column='pulseP 7', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_8 = models.FloatField(db_column='pulseP 8', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep_9 = models.FloatField(db_column='pulseP 9', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    pulsep10 = models.FloatField(db_column='pulseP10', blank=True, null=True)  # Field name made lowercase.
+    pulsep11 = models.FloatField(db_column='pulseP11', blank=True, null=True)  # Field name made lowercase.
+    pulsep12 = models.FloatField(db_column='pulseP12', blank=True, null=True)  # Field name made lowercase.
+    pulsep13 = models.FloatField(db_column='pulseP13', blank=True, null=True)  # Field name made lowercase.
+    pulsep14 = models.FloatField(db_column='pulseP14', blank=True, null=True)  # Field name made lowercase.
+    pulsep15 = models.FloatField(db_column='pulseP15', blank=True, null=True)  # Field name made lowercase.
+    pulsep16 = models.FloatField(db_column='pulseP16', blank=True, null=True)  # Field name made lowercase.
+    pulsep17 = models.FloatField(db_column='pulseP17', blank=True, null=True)  # Field name made lowercase.
+    pulsep18 = models.FloatField(db_column='pulseP18', blank=True, null=True)  # Field name made lowercase.
+    pulsep19 = models.FloatField(db_column='pulseP19', blank=True, null=True)  # Field name made lowercase.
+    shockid_0 = models.FloatField(db_column='shockID 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_1 = models.FloatField(db_column='shockID 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_2 = models.FloatField(db_column='shockID 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_3 = models.FloatField(db_column='shockID 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_4 = models.FloatField(db_column='shockID 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_5 = models.FloatField(db_column='shockID 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_6 = models.FloatField(db_column='shockID 6', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_7 = models.FloatField(db_column='shockID 7', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_8 = models.FloatField(db_column='shockID 8', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid_9 = models.FloatField(db_column='shockID 9', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    shockid10 = models.FloatField(db_column='shockID10', blank=True, null=True)  # Field name made lowercase.
+    shockid11 = models.FloatField(db_column='shockID11', blank=True, null=True)  # Field name made lowercase.
+    meanbp_0 = models.FloatField(db_column='meanBP 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_1 = models.FloatField(db_column='meanBP 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_2 = models.FloatField(db_column='meanBP 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_3 = models.FloatField(db_column='meanBP 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_4 = models.FloatField(db_column='meanBP 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_5 = models.FloatField(db_column='meanBP 5', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_6 = models.FloatField(db_column='meanBP 6', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_7 = models.FloatField(db_column='meanBP 7', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_8 = models.FloatField(db_column='meanBP 8', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp_9 = models.FloatField(db_column='meanBP 9', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    meanbp10 = models.FloatField(db_column='meanBP10', blank=True, null=True)  # Field name made lowercase.
+    meanbp11 = models.FloatField(db_column='meanBP11', blank=True, null=True)  # Field name made lowercase.
+    meanbp12 = models.FloatField(db_column='meanBP12', blank=True, null=True)  # Field name made lowercase.
+    meanbp13 = models.FloatField(db_column='meanBP13', blank=True, null=True)  # Field name made lowercase.
+    meanbp14 = models.FloatField(db_column='meanBP14', blank=True, null=True)  # Field name made lowercase.
+    meanbp15 = models.FloatField(db_column='meanBP15', blank=True, null=True)  # Field name made lowercase.
+    meanbp16 = models.FloatField(db_column='meanBP16', blank=True, null=True)  # Field name made lowercase.
+    meanbp17 = models.FloatField(db_column='meanBP17', blank=True, null=True)  # Field name made lowercase.
+    meanbp18 = models.FloatField(db_column='meanBP18', blank=True, null=True)  # Field name made lowercase.
+    meanbp19 = models.FloatField(db_column='meanBP19', blank=True, null=True)  # Field name made lowercase.
+    tv_0 = models.FloatField(db_column='TV 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tv_1 = models.FloatField(db_column='TV 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tv_2 = models.FloatField(db_column='TV 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tv_3 = models.FloatField(db_column='TV 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ns_0 = models.FloatField(db_column='NS 0', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ns_1 = models.FloatField(db_column='NS 1', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ns_2 = models.FloatField(db_column='NS 2', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ns_3 = models.FloatField(db_column='NS 3', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ns_4 = models.FloatField(db_column='NS 4', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    weight_0 = models.FloatField(db_column='weight 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    creatinine_0 = models.FloatField(db_column='creatinine 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    creatinine_1 = models.FloatField(db_column='creatinine 1', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    gfr_0 = models.FloatField(db_column='gfr 0', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    gfr_1 = models.FloatField(db_column='gfr 1', blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    death = models.FloatField(db_column='Death', blank=True, null=True)  # Field name made lowercase.
+    isdialysis = models.FloatField(db_column='IsDialysis', blank=True, null=True)  # Field name made lowercase.
+    aki = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'AllPT'
