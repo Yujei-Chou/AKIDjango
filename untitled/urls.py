@@ -16,38 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from alert.views import hello_view
 from alert import views
+from django.contrib import admin
+from django.urls import path
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('hello/', hello_view),
-    path('admissiondrug/<str:num>', views.admissiondrug),
-    path('admissiondx/<str:num>', views.admissiondx),
-    path('allergy/<str:num>', views.allergy),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('apacheapsvar/<str:num>/<str:feature>', views.apacheapsvar),
-    path('apachepatientresult/<str:num>', views.apachepatientresult),
-    path('apachepredvar/<str:num>', views.apachepredvar),
-    path('careplancareprovider/<str:num>', views.careplancareprovider),
-    path('careplaneol/<str:num>', views.careplaneol),
-    path('careplangeneral/<str:num>', views.careplangeneral),
-    path('careplangoal/<str:num>', views.careplangoal),
-    path('careplaninfectiousdisease/<str:num>', views.careplaninfectiousdisease),
     path('customlab/<str:num>', views.customlab),
     path('diagnosis/<str:num>', views.diagnosis),
-    path('hospital/<str:num>', views.hospital),
     path('infusiondrug/<str:num>', views.infusiondrug),
     path('intakeoutput/<str:num>/<str:feature>', views.intakeoutput),
     path('lab/<str:num>/<str:feature>', views.lab),
-    path('medication/<str:num>', views.medication),
-    path('microlab/<str:num>', views.microlab),
-    path('note/<str:num>', views.note),
-    path('nurseassessment/<str:num>', views.nurseassessment),
-    path('nursecare/<str:num>', views.nursecare),
     path('nursecharting/<str:num>/<str:feature>', views.nursecharting),
     path('pasthistory/<str:num>/<str:feature>', views.pasthistory),
     path('physicalexam/<str:num>/<str:feature>', views.physicalexam),
-    path('respiratorycare/<str:num>', views.respiratorycare),
     path('respiratorycharting/<str:num>', views.respiratorycharting),
     path('treatment/<str:num>', views.treatment),
     path('vitalaperiodic/<str:num>/<str:feature>', views.vitalaperiodic),
@@ -58,6 +44,6 @@ urlpatterns = [
     path('PatientInUnit/<str:num>', views.PatientInUnit),
     path('featureresult/',views.featureresult),
     path('featureresult/<str:num>',views.queryfeatureresult),
-    path('linkHospital/<str:num>',views.linkHospital),
+
 
 ]

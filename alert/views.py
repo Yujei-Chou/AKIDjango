@@ -1,19 +1,18 @@
 import json
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from alert import models
 from django.core.paginator import Paginator
 from django.db.models import Q
 import pandas as pd
+from django.contrib.auth.decorators import login_required
 
-def hello_view(request):
-    return render(request, 'hello_django.html', {
-        'data': "",
-    })
 
+
+
+@login_required
 def patient(request):
-    # SampleAllPatients_df = pd.read_csv("./AKIPatient/SampleAllPatients.csv", sep=',', header=0, encoding='utf-8')
-    # articles = models.Patient.objects.filter(patientunitstayid__in=SampleAllPatients_df['patientunitstayid']).order_by('uniquepid')
+
     articles = models.Patient.objects.all().order_by('uniquepid')
     paginator = Paginator(articles, 30)
     page = request.GET.get('page')
@@ -25,6 +24,7 @@ def patient(request):
     }
     return render(request, "patient.html", context)
 
+@login_required
 def onlyAKIpatient(request):
     AKIPatients_df = pd.read_csv("./AKIPatient/AKIPatients.csv", sep=',', header=0, encoding='utf-8')
     articles = models.Patient.objects.filter(patientunitstayid__in=AKIPatients_df['patientunitstayid']).order_by('uniquepid')
@@ -39,6 +39,7 @@ def onlyAKIpatient(request):
     }
     return render(request, "patient.html", context)
 
+@login_required
 def featureresult(request):
     articles = models.Allpt.objects.all()
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -48,6 +49,7 @@ def featureresult(request):
 
     return render(request, "featureresult.html", context)
 
+@login_required
 def queryfeatureresult(request,num):
     articles = models.Allpt.objects.filter(patientunitstayid=num)
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -57,34 +59,7 @@ def queryfeatureresult(request,num):
 
     return render(request, "featureresult.html", context)
 
-def admissiondrug(request,num):
-    #articles = models.Admissiondrug.objects.all()
-    articles = models.Admissiondrug.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "admissiondrug.html", context) #必须用这个return
-
-def admissiondx(request,num):
-    articles = models.Admissiondx.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "admissiondx.html", context) #必须用这个return
-
-def allergy(request,num):
-    articles = models.Allergy.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "allergy.html", context) #必须用这个return
-
+@login_required
 def apacheapsvar(request,num,feature):
     articles = models.Apacheapsvar.objects.filter(patientunitstayid=num)
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -97,67 +72,7 @@ def apacheapsvar(request,num,feature):
 
     return render(request, "apacheapsvar.html", context) #必须用这个return
 
-def apachepatientresult(request,num):
-    articles = models.Apachepatientresult.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "apachepatientresult.html", context) #必须用这个return
-
-def apachepredvar(request,num):
-    articles = models.Apachepredvar.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "apachepredvar.html", context) #必须用这个return
-
-def careplancareprovider(request,num):
-    articles = models.Careplancareprovider.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "careplancareprovider.html", context) #必须用这个return
-def careplaneol(request,num):
-    articles = models.Careplaneol.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "careplaneol.html", context) #必须用这个return
-def careplangeneral(request,num):
-    articles = models.Careplangeneral.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "careplangeneral.html", context) #必须用这个return
-
-def careplangoal(request,num):
-    articles = models.Careplangoal.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "careplangoal.html", context) #必须用这个return
-
-def careplaninfectiousdisease(request,num):
-    articles = models.Careplaninfectiousdisease.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "careplaninfectiousdisease.html", context) #必须用这个return
-
+@login_required
 def customlab(request,num):
     articles = models.Customlab.objects.filter(patientunitstayid=num).filter(labothername__icontains="est GFR").order_by("labotheroffset")
     # if(feature == "GFR"):
@@ -171,6 +86,7 @@ def customlab(request,num):
 
     return render(request, "customlab.html", context) #必须用这个return
 
+@login_required
 def diagnosis(request,num):
     articles = models.Diagnosis.objects.filter(patientunitstayid=num).order_by("diagnosisoffset")
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -180,15 +96,7 @@ def diagnosis(request,num):
 
     return render(request, "diagnosis.html", context) #必须用这个return
 
-def hospital(request,num):
-    articles = models.Hospital.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "hospital.html", context) #必须用这个return
-
+@login_required
 def infusiondrug(request,num):
     articles = models.Infusiondrug.objects.filter(patientunitstayid=num).filter(drugname__contains="NS").order_by("infusionoffset")
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -198,6 +106,7 @@ def infusiondrug(request,num):
 
     return render(request, "infusiondrug.html", context) #必须用这个return
 
+@login_required
 def intakeoutput(request,num,feature):
     if(feature == "urine"):
         articles = models.Intakeoutput.objects.filter(patientunitstayid=num).filter(celllabel__contains="Urine").order_by("intakeoutputoffset")
@@ -214,6 +123,7 @@ def intakeoutput(request,num,feature):
 
     return render(request, "intakeoutput.html", context) #必须用这个return
 
+@login_required
 def lab(request,num,feature):
     if(feature == "creatinine"):
         articles = models.Lab.objects.filter(patientunitstayid=num).filter(labname__contains="creatinine").order_by("labresultoffset")
@@ -237,6 +147,7 @@ def lab(request,num,feature):
 
     return render(request, "lab.html", context) #必须用这个return
 
+@login_required
 def medication(request,num):
     articles = models.Medication.objects.filter(patientunitstayid=num)
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -246,42 +157,8 @@ def medication(request,num):
 
     return render(request, "medication.html", context) #必须用这个return
 
-def microlab(request,num):
-    articles = models.Microlab.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
 
-    return render(request, "microlab.html", context) #必须用这个return
-
-def note(request,num):
-    articles = models.Note.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "note.html", context) #必须用这个return
-
-def nurseassessment(request,num):
-    articles = models.Nurseassessment.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "nurseassessment.html", context) #必须用这个return
-
-def nursecare(request,num):
-    articles = models.Nursecare.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "nursecare.html", context) #必须用这个return
-
+@login_required
 def nursecharting(request,num,feature):
     if(feature == "temperature"):
         articles = models.Nursecharting.objects.filter(patientunitstayid=num).filter(nursingchartcelltypevallabel="Temperature").order_by('nursingchartoffset')
@@ -298,6 +175,7 @@ def nursecharting(request,num,feature):
 
     return render(request, "nursecharting.html", context) #必须用这个return
 
+@login_required
 def pasthistory(request,num,feature):
     if(feature == "creatinine"):
         articles = models.Pasthistory.objects.filter(patientunitstayid=num).filter(pasthistoryvaluetext__contains="creatinine").order_by("pasthistoryoffset")
@@ -310,6 +188,7 @@ def pasthistory(request,num,feature):
 
     return render(request, "pasthistory.html", context) #必须用这个return
 
+@login_required
 def physicalexam(request,num,feature):
     if(feature == "urine"):
         articles = models.Physicalexam.objects.filter(patientunitstayid=num).filter(physicalexamvalue__contains="Urine").order_by("physicalexamoffset")
@@ -322,15 +201,7 @@ def physicalexam(request,num,feature):
 
     return render(request, "physicalexam.html", context) #必须用这个return
 
-def respiratorycare(request,num):
-    articles = models.Respiratorycare.objects.filter(patientunitstayid=num)
-    paginator = Paginator(articles, 30)  # Show 25 contacts per page
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts': contacts}
-
-    return render(request, "respiratorycare.html", context) #必须用这个return
-
+@login_required
 def respiratorycharting(request,num):
     articles = models.Respiratorycharting.objects.filter(patientunitstayid=num).filter(respchartvaluelabel__contains="Tidal Volume").order_by("respchartoffset")
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -340,6 +211,7 @@ def respiratorycharting(request,num):
 
     return render(request, "respiratorycharting.html", context) #必须用这个return
 
+@login_required
 def treatment(request,num):
     articles = models.Treatment.objects.filter(patientunitstayid=num).order_by("treatmentoffset")
     paginator = Paginator(articles, 30)  # Show 25 contacts per page
@@ -349,6 +221,7 @@ def treatment(request,num):
 
     return render(request, "treatment.html", context) #必须用这个return
 
+@login_required
 def vitalaperiodic(request,num,feature):
     if(feature == "SystolicBP_Data"):
         articles = models.Vitalaperiodic.objects.filter(patientunitstayid=num).exclude(noninvasivesystolic__isnull=True).order_by("observationoffset")
@@ -365,6 +238,7 @@ def vitalaperiodic(request,num,feature):
     }
     return render(request, "vitalaperiodic.html", context) #必须用这个return
 
+@login_required
 def vitalperiodic(request,num,feature):
     if(feature == "temperature"):
         articles = models.Vitalperiodic.objects.filter(patientunitstayid=num).exclude(temperature__isnull=True).order_by("observationoffset")
@@ -381,6 +255,7 @@ def vitalperiodic(request,num,feature):
     return render(request, "vitalperiodic.html", context) #必须用这个return
 
 
+@login_required
 def PatientInHospital(request,num):
     articles = models.Patient.objects.filter(patienthealthsystemstayid=num)
     paginator = Paginator(articles, 30)
@@ -389,6 +264,7 @@ def PatientInHospital(request,num):
     context = {'contacts':contacts}
     return render(request, "PatientInHospital.html", context)
 
+@login_required
 def PatientInUnit(request,num):
     articles = models.Patient.objects.filter(patientunitstayid=num)
     paginator = Paginator(articles, 30)
@@ -397,10 +273,3 @@ def PatientInUnit(request,num):
     context = {'contacts':contacts}
     return render(request, "PatientInUnit.html", context)
 
-def linkHospital(request,num):
-    articles = models.Hospital.objects.filter(hospitalid=num)
-    paginator = Paginator(articles, 30)
-    page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    context = {'contacts':contacts}
-    return render(request, "hospital.html", context)
