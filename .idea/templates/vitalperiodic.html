@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang=”en”>
+<head>
+    <meta charset=”UTF-8">
+    <title>Vitalperiodic</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+          overflow: hidden;
+          background-color: #006550;
+          {#padding: 16px 10px;#}
+        }
+        * {
+          font-family: sans-serif; /* Change your font family */
+        }
+
+        .header a {
+          text-align: center;
+          float: left;
+          padding: 10px 16px;
+
+        }
+        .header a:hover{
+            background-color: #aaaaaa;
+        }
+
+        .content-table {
+          border-collapse: collapse;
+          margin: 25px 0;
+          font-size: 0.9em;
+          min-width: 400px;
+          border-radius: 5px 5px 0 0;
+          overflow: visible;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+        .content-table tbody tr:hover {
+            background-color:#aaaaaa;
+        }
+
+        .content-p {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .dropbtn {
+          background-color: #009879;
+          color: white;
+          padding: 2px;
+          font-size: 0.9em;
+          font-weight: bold;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 6px 8px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+        .dropdown_header {
+            overflow: hidden;
+            float: right;
+        }
+
+        .dropdown_header .dropbtn_header {
+          font-size: 24px;
+          border: none;
+          outline: none;
+          color: white;
+          padding: 10px 16px;
+          background-color: inherit;
+          font-family: inherit;
+          margin: 0;
+        }
+
+        .haeder a:hover, .dropdown_header:hover .dropbtn_header {
+          background-color: #aaaaaa;
+        }
+
+        .dropdown-content_header {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content_header a {
+          float: none;
+          color: black;
+          padding: 6px 8px;
+          min-width: 150px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+        }
+
+        .dropdown-content_header a:hover {
+          background-color: #ddd;
+        }
+
+        .dropdown_header:hover .dropdown-content_header {
+          display: block;
+        }
+
+
+    </style>
+
+{#    <p align="left">現在時刻： <span id="datetime"></span></p>#}
+    <div class="header">
+        <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:20px" title="home"></i></a>
+        <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:20px;text-decoration: none">eicu website</a>
+        <div class="dropdown_header" style="float: left">
+            <button class="dropbtn_header" style="color:white;font-size:20px;text-decoration: none">patients' type
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content_header">
+                <a href="/OnlyAKIPatient" >AKI Patients</a>
+                <a href="/patient">All Patients</a>
+            </div>
+        </div>
+        <a href="/featureresult" style="color:white;font-size:20px;text-decoration: none">model's feature</a>
+        {% if user.is_authenticated %}
+            <a href="/logout" style="color:white;font-size:20px;text-decoration: none">Logout</a>
+        {% endif %}
+        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">VitalPeriodic</a>
+    </div>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+
+
+    </script>
+    <table class="content-table" id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th title="病患在ICU的ID">PatientUnitStayID</th>
+            <th title="number of minutes from unit admit time that the periodic value was entered">Observation Offset</th>
+
+            {% if feature == "temperature" %}
+                <th title="病患體溫(攝氏)">temperature</th>
+            {% endif %}
+            {% if feature == "Hemodynamic_Data" %}
+                <th title="中心靜脈壓">cvp</th>
+            {% endif %}
+{#            <th>vitalperiodicid</th>#}
+{#            <th><a href="" style="color: #33ffff">patientunitstayid</a></th>#}
+{#            <th>observationoffset</th>#}
+{#            <th>temperature</th>#}
+{#            <th>sao2</th>#}
+{#            <th>heartrate</th>#}
+{#            <th>respiration</th>#}
+{#            <th>cvp</th>#}
+{#            <th>etco2</th>#}
+{#            <th>systemicsystolic</th>#}
+{#            <th>systemicdiastolic</th>#}
+{#            <th>systemicmean</th>#}
+{#            <th>pasystolic</th>#}
+{#            <th>padiastolic</th>#}
+{#            <th>pamean</th>#}
+{#            <th>st1</th>#}
+{#            <th>st2</th>#}
+{#            <th>st3</th>#}
+{#            <th>icp</th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid.patientunitstayid }}</td>
+            <td title="number of minutes from unit admit time that the periodic value was entered">{{ contact.observationoffset }}</td>
+            {% if feature == "temperature" %}
+                <td title="病患體溫(攝氏)">{{ contact.temperature }}</td>
+            {% endif %}
+            {% if feature == "Hemodynamic_Data" %}
+                <td title="中心靜脈壓">{{ contact.cvp }}</td>
+            {% endif %}
+{#            <td>{{ contact.vitalperiodicid }}</td>#}
+{#            <td><a href="/linkPage/{{ contact.patientunitstayid.patientunitstayid }}">{{ contact.patientunitstayid.patientunitstayid }}</a></td>#}
+{#            <td>{{ contact.observationoffset }}</td>#}
+{#            <td>{{ contact.temperature }}</td>#}
+{#            <td>{{ contact.sao2 }}</td>#}
+{#            <td>{{ contact.heartrate }}</td>#}
+{#            <td>{{ contact.respiration }}</td>#}
+{#            <td>{{ contact.cvp }}</td>#}
+{#            <td>{{ contact.etco2 }}</td>#}
+{#            <td>{{ contact.systemicsystolic }}</td>#}
+{#            <td>{{ contact.systemicdiastolic }}</td>#}
+{#            <td>{{ contact.systemicmean }}</td>#}
+{#            <td>{{ contact.pasystolic }}</td>#}
+{#            <td>{{ contact.padiastolic }}</td>#}
+{#            <td>{{ contact.pamean }}</td>#}
+{#            <td>{{ contact.st1 }}</td>#}
+{#            <td>{{ contact.st2 }}</td>#}
+{#            <td>{{ contact.st3 }}</td>#}
+{#            <td>{{ contact.icp }}</td>#}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>

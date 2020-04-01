@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=”en”>
+{% load filterUnitID %}
+<head>
+    <meta charset=”UTF-8">
+    <title>PatientInUnit</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+          overflow: hidden;
+          margin: 0px;
+          background-color: #006550;
+          {#padding: 16px 10px;#}
+        }
+        * {
+          font-family: sans-serif; /* Change your font family */
+        }
+
+        .header a {
+          text-align: center;
+          float: left;
+          padding: 10px 16px;
+
+        }
+        .header a:hover{
+            background-color: #aaaaaa;
+        }
+
+        .content-table {
+          border-collapse: collapse;
+          margin: 25px 0;
+          font-size: 0.9em;
+          min-width: 400px;
+          border-radius: 5px 5px 0 0;
+          overflow: visible;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+        .content-table tbody tr:hover {
+            background-color:#aaaaaa;
+        }
+
+        .content-p {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        .dropbtn {
+          background-color: #009879;
+          color: white;
+          padding: 2px;
+          font-size: 0.9em;
+          font-weight: bold;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 6px 8px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+        .dropdown_header {
+            overflow: hidden;
+            float: right;
+        }
+
+        .dropdown_header .dropbtn_header {
+          font-size: 24px;
+          border: none;
+          outline: none;
+          color: white;
+          padding: 10px 16px;
+          background-color: inherit;
+          font-family: inherit;
+          margin: 0;
+        }
+
+        .haeder a:hover, .dropdown_header:hover .dropbtn_header {
+          background-color: #aaaaaa;
+        }
+
+        .dropdown-content_header {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        .dropdown-content_header a {
+          float: none;
+          color: black;
+          padding: 6px 8px;
+          min-width: 150px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+        }
+
+        .dropdown-content_header a:hover {
+          background-color: #ddd;
+        }
+
+        .dropdown_header:hover .dropdown-content_header {
+          display: block;
+        }
+
+
+    </style>
+
+{#    <p align="left">現在時刻： <span id="datetime"></span></p>#}
+    <div class="header">
+        <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:20px" title="home"></i></a>
+        <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:20px;text-decoration: none">eicu website</a>
+        <div class="dropdown_header" style="float: left">
+            <button class="dropbtn_header" style="color:white;font-size:20px;text-decoration: none">patients' type
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content_header">
+                <a href="/OnlyAKIPatient" >AKI Patients</a>
+                <a href="/patient">All Patients</a>
+            </div>
+        </div>
+        <a href="/featureresult" style="color:white;font-size:20px;text-decoration: none">model's feature</a>
+        {% if user.is_authenticated %}
+            <a href="/logout" style="color:white;font-size:20px;text-decoration: none">Logout</a>
+        {% endif %}
+        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Patient</a>
+    </div>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
+        //document.getElementById("test").innerHTML=temp;
+
+        function LinkSamePatientID(x) {
+            var table_name=document.getElementById("tables").value;
+            console.log(table_name);
+            window.location.href="/"+table_name+"/"+x.toString();
+        }
+
+
+
+    </script>
+    <table class="content-table" id="datatable" border="1" style="width: 100%">
+        <thead>
+        <tr>
+            <th>PatientUnitStayID</th>
+            <th>ApacheAdmissiondx</th>
+            <th>Unit Admit Time24</th>
+            <th>Hospital Admit Offset</th>
+            <th>Hospital Discharge Offset</th>
+            <th>Unit Discharge Offset</th>
+            <th>Admission Weight</th>
+            <th>Discharge Weight</th>
+            <th>Unit Discharge Status</th>
+            <th>Diagnosis</th>
+            <th>Past History</th>
+            <th>Treatment</th>
+            <th>Dialysis</th>
+            <th>Hematocrit</th>
+            <th>Temperature</th>
+            <th>Creatinine</th>
+            <th>Urine</th>
+            <th>Hemodynamic Data</th>
+            <th>Diastolic Blood Pressure(noninvasive)</th>
+            <th>Systolic Blood Pressure(noninvasive)</th>
+            <th>Serum Urea Nitrogen</th>
+            <th>PH</th>
+            <th>K And Ca</th>
+            <th>paO2 To FiO2 Ratio</th>
+            <th>Cumulative Dose Of Normal Saline</th>
+            <th>Estimated GFR Based On Serum Creatinine Level</th>
+            <th>Delivered Tidal Volume</th>
+            <th>Net Fluid Balance</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <p align="left" style="font-weight: bold">Patient's uniquepID:{{ contact.uniquepid }}</p>
+            <td title="病患在ICU的ID">{{ contact.patientunitstayid }}</td>
+            <td title="admission diagnosis for patients unit stay">{{ contact.apacheadmissiondx }}</td>
+            <td title="進ICU的時間">{{ contact.unitadmittime24 }}</td>
+            <td title="number of minutes from unit admit time that the patient was admitted to the hospital">{{ contact.hospitaladmitoffset }}</td>
+            <td title="number of minutes from unit admit time that the patient was discharged from the hospital">{{ contact.hospitaldischargeoffset }}</td>
+            <td title="number of minutes from unit admit time that the patient was discharged from the unit">{{ contact.unitdischargeoffset }}</td>
+            <td title="進ICU時的體重">{{ contact.admissionweight }}</td>
+            <td title="離開ICU時的體重">{{ contact.dischargeweight }}</td>
+            <td title="離開ICU是否死亡">{{ contact.unitdischargestatus }}</td>
+            <td title="診斷"><a href="/diagnosis/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="病史"><a href="/pasthistory/{{ contact.patientunitstayid }}/all">ref</a></td>
+            <td title="治療"><a href="/treatment/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="set to 0 when not populated; set to 1 when it is indicated that the patient is on dialysis">{{ contact.connectID.dialysis }}</td>
+            <td title="血容比相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/HCT">apacheApsVar</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/HCT">lab</a>
+                </div>
+            </div>
+            <td title="體溫相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/temperature">apacheApsVar</a>
+                    <a href="/nursecharting/{{ contact.patientunitstayid }}/temperature">nursecharting</a>
+                    <a href="/vitalperiodic/{{ contact.patientunitstayid }}/temperature">vitalperiodic</a>
+                </div>
+            </div>
+            </td>
+            <td title="肌酸酐相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/pasthistory/{{ contact.patientunitstayid }}/creatinine">pasthistory</a>
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/creatinine">apacheApsVar</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/creatinine">lab</a>
+                </div>
+            </div>
+            </td>
+            <td title="尿液相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/urine">apacheApsVar</a>
+                    <a href="/physicalexam/{{ contact.patientunitstayid }}/urine">physicalexam</a>
+                    <a href="/intakeoutput/{{ contact.patientunitstayid }}/urine">intakeoutput</a>
+                </div>
+            </div>
+            </td>
+            <td title="Hemodynamic Data相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/physicalexam/{{ contact.patientunitstayid }}/Hemodynamic_Data">physicalexam</a>
+                    <a href="/vitalaperiodic/{{ contact.patientunitstayid }}/Hemodynamic_Data">vitalaperiodic(svr,svri,pvr,pvri,paop,CO)</a>
+                    <a href="/vitalperiodic/{{ contact.patientunitstayid }}/Hemodynamic_Data">vitalperiodic(cvp)</a>
+                </div>
+            </div>
+            </td>
+            <td title="非侵入性舒張壓相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/vitalaperiodic/{{ contact.patientunitstayid }}/DiastolicBP_Data">vitalaperiodic</a>
+                    <a href="/nursecharting/{{ contact.patientunitstayid }}/DiastolicBP_Data">nursecharting</a>
+                </div>
+            </div>
+            </td>
+            <td title="非侵入性收縮壓相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/vitalaperiodic/{{ contact.patientunitstayid }}/SystolicBP_Data">vitalaperiodic</a>
+                    <a href="/nursecharting/{{ contact.patientunitstayid }}/SystolicBP_Data">nursecharting</a>
+                </div>
+            </div>
+            </td>
+            <td title="血中尿素氮相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/BUN">apacheApsVar</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/BUN">lab</a>
+                </div>
+            </div>
+            </td>
+            <td title="酸鹼值相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/PH">apacheApsVar</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/PH">lab</a>
+                </div>
+            </div>
+            </td>
+            <td title="K與Ca濃度相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/Ca">apacheApsVar(sodium)</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/Ca_K">lab(sodium,potassium)</a>
+                </div>
+            </div>
+            </td>
+            <td title="PaO2與FiO2相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/apacheapsvar/{{ contact.patientunitstayid }}/paO2_FiO2">apacheApsVar(paO2,FiO2)</a>
+                    <a href="/lab/{{ contact.patientunitstayid }}/paO2_FiO2">lab(paO2,FiO2)</a>
+                </div>
+            </div>
+            </td>
+            <td title="normal saline相關表格">
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href="/infusiondrug/{{ contact.patientunitstayid }}">infusiondrug</a>
+                    <a href="/intakeoutput/{{ contact.patientunitstayid }}/NS">intakeoutput</a>
+                </div>
+            </div>
+            </td>
+            <td title="estimated GFR相關表格"><a href="/customlab/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="Tidal Volume相關表格"><a href="/respiratorycharting/{{ contact.patientunitstayid }}">ref</a></td>
+            <td title="net fluid balance相關表格"><a href="/intakeoutput/{{ contact.patientunitstayid }}/netfluid">ref</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+
+</div>
+</body>
+</html>
