@@ -127,4 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/patient'
+<<<<<<< HEAD
 LOGIN_URL = '/login'
+=======
+>>>>>>> ddc77456f6fc7d6601185aa423ea538d2acd335b
