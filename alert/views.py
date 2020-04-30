@@ -12,8 +12,18 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.contrib import auth
+import xgboost as xgb
+import os
+import numpy as np
+import pickle
+import sklearn
 
 
+def ReplaceNan(l):
+    for i,data in enumerate(l):
+        if(data == ''):
+            l[i] = '-10000'
+    return l
 
 def login(request):
     if request.user.is_authenticated:
@@ -47,6 +57,131 @@ def patient(request):
         'state': state,
     }
     return render(request, "patient.html", context)
+
+
+@login_required
+def predict(request):
+    ID = [0, 1, 2, 3, 4, 5]
+    context = {
+        'ID': ID,
+    }
+
+    return render(request, "predict.html", context)
+
+
+@login_required
+def predictresult(request):
+    Crt=[]
+    Intake=[]
+    Urine=[]
+    pH=[]
+    Hct = []
+    BUN=[]
+    Na=[]
+    K=[]
+    TP=[]
+    SystolicBP=[]
+    MeanBP=[]
+    MSI=[]
+    eGFR=[]
+
+    Age = []
+    Weight = []
+    Gender = ""
+    temp=[]
+    PredictRes = ""
+    state = ""
+    filename = './AKIPatient/Xgboost_Seq.sav'
+    Xgb_model = pickle.load(open(filename, 'rb'))
+    if request.method == 'POST':
+        if 'Upload' in request.POST:
+            state = 'Upload'
+            UploadFile = request.FILES['document']
+            File_df = pd.read_csv(UploadFile, sep=',', header=0, encoding='utf-8')
+            File_df = File_df.fillna(-10000)
+            X = File_df.to_numpy()
+            Y = Xgb_model.predict(X)
+            temp = Y
+            print(Y)
+
+        if 'OnlyOneData' in request.POST:
+            state = 'OnlyOneData'
+            Age = request.POST['Age']
+            Weight = request.POST['Weight']
+            Gender = request.POST['Gender']
+            for i in range(0,6):
+                Crtstr = 'Crt_' + str(i)
+                Intakestr = 'Intake_' + str(i)
+                Urinestr = 'Urine_' + str(i)
+                pHstr = 'pH_' + str(i)
+                Hctstr = 'Hct_' + str(i)
+                BUNstr = 'BUN_' + str(i)
+                Nastr = 'Na_' + str(i)
+                Kstr = 'K_' + str(i)
+                TPstr = 'TP_' + str(i)
+                SystolicBPstr = 'SystolicBP_' + str(i)
+                MeanBPstr = 'MeanBP_' + str(i)
+                MSIstr = 'MSI_' + str(i)
+                eGFRstr = 'eGFR_' + str(i)
+
+                Crt.append(request.POST[Crtstr])
+                Intake.append(request.POST[Intakestr])
+                Urine.append(request.POST[Urinestr])
+                pH.append(request.POST[pHstr])
+                Hct.append(request.POST[Hctstr])
+                BUN.append(request.POST[BUNstr])
+                Na.append(request.POST[Nastr])
+                K.append(request.POST[Kstr])
+                TP.append(request.POST[TPstr])
+                SystolicBP.append(request.POST[SystolicBPstr])
+                MeanBP.append(request.POST[MeanBPstr])
+                MSI.append(request.POST[MSIstr])
+                eGFR.append(request.POST[eGFRstr])
+
+            Crt = list(map(float, ReplaceNan(Crt)))
+            Intake = list(map(float, ReplaceNan(Intake)))
+            Urine = list(map(float, ReplaceNan(Urine)))
+            pH = list(map(float, ReplaceNan(pH)))
+            Hct = list(map(float, ReplaceNan(Hct)))
+            BUN = list(map(float, ReplaceNan(BUN)))
+            Na = list(map(float, ReplaceNan(Na)))
+            K = list(map(float, ReplaceNan(K)))
+            TP = list(map(float, ReplaceNan(TP)))
+            SystolicBP = list(map(float, ReplaceNan(SystolicBP)))
+            MeanBP = list(map(float, ReplaceNan(MeanBP)))
+            MSI = list(map(float, ReplaceNan(MSI)))
+            eGFR = list(map(float, ReplaceNan(eGFR)))
+            if(Gender == 'F'):
+                Gender = '0'
+            if(Gender == 'M'):
+                Gender = '1'
+            if(Gender == ''):
+                Gender = '-10000'
+            if(Weight == ''):
+                Weight = '-10000'
+            if(Age == ''):
+                Age = '-10000'
+
+            X = np.array([Crt, Intake, Urine, pH, Hct, BUN, Na, K, TP, SystolicBP, MeanBP, MSI, eGFR])
+            X = X.reshape(1, -1)
+            X = np.insert(X, 0, float(Gender), axis=1)
+            X = np.insert(X, 0, float(Weight), axis=1)
+            X = np.insert(X, 0, float(Age), axis=1)
+            Y = Xgb_model.predict(X)
+            temp = Y
+            # print(X)
+            # if (Y[0] == 1):
+            #     PredictRes = 'With AKI'
+            # else:
+            #     PredictRes = 'No AKI'
+
+    context = {
+        'PredictRes': PredictRes,
+        'state': state,
+        'temp': temp,
+    }
+
+    return render(request, "predictresult.html", context)
 
 @login_required
 def onlyAKIpatient(request):

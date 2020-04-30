@@ -41,6 +41,8 @@ urlpatterns = [
     path('vitalaperiodic/<str:num>/<str:feature>', views.vitalaperiodic),
     path('vitalperiodic/<str:num>/<str:feature>', views.vitalperiodic),
     path('patient/', views.patient),
+    path('predict/', views.predict),
+    path('predictresult/', views.predictresult),
     path('OnlyAKIPatient/', views.onlyAKIpatient),
     path('PatientInHospital/<str:num>', views.PatientInHospital),
     path('PatientInUnit/<str:num>', views.PatientInUnit),

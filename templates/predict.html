@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang=”en”>
-{% load filterUnitID %}
+<html lang="en">
 <head>
     <meta charset=”UTF-8">
     <title>patient</title>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-
-<body>
     <style>
         body {
           margin: 0;
@@ -164,7 +161,7 @@
 
     </style>
 
-{#    <p align="left">現在時刻： <span id="datetime"></span></p>#}
+
     <div class="header">
         <a class="home" href="/patient/"><i class="fa fa-home" style="color:white;font-size:20px" title="home"></i></a>
         <a href="https://eicu-crd.mit.edu/" style="color:white;font-size:20px;text-decoration: none">eicu website</a>
@@ -182,102 +179,126 @@
         {% if user.is_authenticated %}
             <a href="/logout" style="color:white;font-size:20px;text-decoration: none">Logout</a>
         {% endif %}
-        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Patient</a>
+        <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Predict</a>
     </div>
 
-    <p></p>
-    <form class="searchbox" style="margin:auto;max-width:300px;float: left">
-      <input type="text" placeholder="PatientUnitStayID" name="search" id="searchtxt">
-      <button type="button" onclick=SearchID()><i class="fa fa-search"></i></button>
-      <p></p>
+
+    <form action="/predictresult/" method="post">
+        {% csrf_token %}
+        <table class="content-table" id="datatable" border="1" style="width: 100%">
+            <thead>
+            <tr>
+                <th>feature</th>
+                <th>24hrs~20hrs ago</th>
+                <th>20hrs~16hrs ago</th>
+                <th>16hrs~12hrs ago</th>
+                <th>12hrs~8hrs ago</th>
+                <th>8hrs~4hrs ago</th>
+                <th>4hrs~0hrs ago</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Creatinine(mg/dl)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="Crt_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Intake(ml)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="Intake_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Urine(ml)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="Urine_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>pH</td>
+                {% for i in ID %}
+                    <td><input type="text" name="pH_{{ i }}"></td>
+                {% endfor %}
+
+            </tr>
+            <tr>
+                <td>Hct(%)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="Hct_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>BUN(mg/dl)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="BUN_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Na(mmol/L)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="Na_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>K(mmol/L)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="K_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Temperature(Celsius)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="TP_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Systolic Blood Pressure(Non Invasive)(mmHg)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="SystolicBP_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Mean Blood Pressure(Non Invasive)(mmHg)</td>
+                {% for i in ID %}
+                    <td><input type="text" name="MeanBP_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>MSI</td>
+                {% for i in ID %}
+                    <td><input type="text" name="MSI_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>eGFR</td>
+                {% for i in ID %}
+                    <td><input type="text" name="eGFR_{{ i }}"></td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    <div class="center">
+        <p>
+            <label for="Age">Age(Years):</label>
+            <input type="text" name="Age">
+            <label for="Weight">Weight(kg):</label>
+            <input type="text" name="Weight">
+            <label for="Gender">Gender(F/M):</label>
+            <input type="text" name="Gender">
+            <input type="submit" value="Submit" name="OnlyOneData">
+        </p>
+    </div>
+    </form>
+    <form action="/predictresult/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="document">Upload File(csv files):</label>
+        <input type="file" name="document">
+        <button type="submit" name="Upload">Upload</button>
+
     </form>
 
-    <script>
 
-        var dt = new Date();
-        document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "/"+ (("0"+(dt.getMonth()+1)).slice(-2)) +"/"+ (("0"+dt.getDate()).slice(-2))  +"_"+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2)) + ":" + (("0"+dt.getSeconds()).slice(-2));
-        //document.getElementById("test").innerHTML=temp;
-
-        function LinkSamePatientID(x) {
-            var table_name=document.getElementById("tables").value;
-            console.log(table_name);
-            window.location.href="/"+table_name+"/"+x.toString();
-        }
-        function SearchID() {
-            var ID = document.getElementById("searchtxt").value;
-            console.log(ID);
-            window.location.href="/PatientInUnit/"+ID.toString();
-        }
-
-
-
-
-    </script>
-
-
-    <table class="content-table" id="datatable" border="1" style="width: 100%">
-        <thead>
-        <tr>
-            <th>UniquepID</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Admission Height</th>
-            <th>PatientHealthSystemStayID</th>
-            <th>Death</th>
-
-
-
-        </tr>
-        </thead>
-        <tbody>
-        {% for contact in contacts %}
-        <tr>
-            {% ifchanged contact.uniquepid %}
-                <td title="病患唯一ID">{{ contact.uniquepid }}</td>
-                <td title="性別">{{ contact.gender }}</td>
-                <td title="年紀">{{ contact.age }}</td>
-                <td title="身高">{{ contact.admissionheight }}</td>
-                <td title="病患入院時所對應的ID">
-                <div class="dropdown">
-                    <button class="dropbtn">Dropdown<i class="fa fa-caret-down"></i></button>
-                    <div class="dropdown-content">
-                        {% for data in contact.uniquepid|filterHospitalID %}
-                            {% ifchanged data.patienthealthsystemstayid %}
-                                <a href="/PatientInHospital/{{ data.patienthealthsystemstayid }}">{{ data.patienthealthsystemstayid }}</a>
-                            {% endifchanged %}
-                        {% endfor %}
-                    </div>
-                </div>
-                </td>
-                <td title="最終此病患是否死亡">{{ contact.uniquepid|DischargeHosStatus }}</td>
-
-            {% endifchanged %}
-
-
-            <!--
-            <td><a href="/careplaneol/{{ contact.patientunitstayid}}">{{ contact.patientunitstayid}}</a></td>
-            -->
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-<div class="pagination">
-    <span class="step-links">
-        {% if contacts.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-        </span>
-
-        {% if contacts.has_next %}
-            <a href="?page={{ contacts.next_page_number }}">next</a>
-            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-
-</div>
 </body>
 </html>
