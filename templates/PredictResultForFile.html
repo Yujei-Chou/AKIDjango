@@ -181,12 +181,18 @@
         {% endif %}
         <a href="#" style="color:white;float: right;font-size:20px;text-decoration: none;background-color:transparent">Predict</a>
     </div>
+    <h1 align="center">Predict Result:</h1>
+    {% for contact in contacts %}
+        {% if contact.aki == 1 %}
+            <h1 align="center">AKI</h1>
+        {% endif %}
+        {% if contact.aki == 0 %}
+            <h1 align="center">No AKI</h1>
+        {% endif %}
+    {% endfor  %}
 
-
-    <form action="/PredictResultForInput/" method="post">
-        {% csrf_token %}
-        <table class="content-table" id="datatable" border="1" style="width: 100%">
-            <thead>
+    <table class="content-table" id="datatable" border="1" style="width: 100%">
+        <thead>
             <tr>
                 <th>feature</th>
                 <th>24hrs~20hrs ago</th>
@@ -196,109 +202,113 @@
                 <th>8hrs~4hrs ago</th>
                 <th>4hrs~0hrs ago</th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
             <tr>
                 <td>Creatinine(mg/dl)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="Crt_{{ i }}" placeholder="0.1~20"></td>
+                {% for data in contact.crt %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Intake(ml)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="Intake_{{ i }}" placeholder="0~10000"></td>
+                {% for data in contact.intake %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Urine(ml)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="Urine_{{ i }}" placeholder="<3000"></td>
+                {% for data in contact.urine %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>pH</td>
-                {% for i in ID %}
-                    <td><input type="text" name="pH_{{ i }}" placeholder="6.8~7.8"></td>
+                {% for data in contact.pH %}
+                    <td>{{ data }}</td>
                 {% endfor %}
-
             </tr>
             <tr>
                 <td>Hct(%)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="Hct_{{ i }}" placeholder="10~70"></td>
+                {% for data in contact.Hct %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>BUN(mg/dl)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="BUN_{{ i }}" placeholder="0~60"></td>
+                {% for data in contact.BUN %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Na(mmol/L)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="Na_{{ i }}" placeholder="100~180"></td>
+                {% for data in contact.Na %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>K(mmol/L)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="K_{{ i }}" placeholder="1~9"></td>
+                {% for data in contact.K %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Temperature(Celsius)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="TP_{{ i }}" placeholder="35~41"></td>
+                {% for data in contact.TP %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Systolic Blood Pressure(Non Invasive)(mmHg)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="SystolicBP_{{ i }}" placeholder="<250"></td>
+                {% for data in contact.systolicBP %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>Mean Blood Pressure(Non Invasive)(mmHg)</td>
-                {% for i in ID %}
-                    <td><input type="text" name="MeanBP_{{ i }}" placeholder="<200"></td>
+                {% for data in contact.meanBP %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>MSI</td>
-                {% for i in ID %}
-                    <td><input type="text" name="MSI_{{ i }}" placeholder="<230"></td>
+                 {% for data in contact.MSI %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <td>eGFR</td>
-                {% for i in ID %}
-                    <td><input type="text" name="eGFR_{{ i }}" placeholder="<230"></td>
+                {% for data in contact.eGFR %}
+                    <td>{{ data }}</td>
                 {% endfor %}
             </tr>
-            </tbody>
-        </table>
-    <div class="center">
-        <p>
-            <label for="Age">Age(Years):</label>
-            <input type="text" name="Age">
-            <label for="Weight">Weight(kg):</label>
-            <input type="text" name="Weight">
-            <label for="Gender">Gender(F/M):</label>
-            <input type="text" name="Gender">
-            <input type="submit" value="Submit" name="OnlyOneData">
-        </p>
-    </div>
-    </form>
-    <form action="/PredictResultForFile/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="document">Upload File(csv files):</label>
-        <input type="file" name="document">
-        <button type="submit" name="Upload">Upload</button>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% for contact in contacts %}
+        <p>Age(Years):{{ contact.age }}</p>
+        <p>Weight(kg):{{ contact.weight }}</p>
+        <p>Gender(F/M):{{ contact.gender }}</p>
+    {% endfor  %}
 
-    </form>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
 
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+
+</div>
 </body>
 </html>

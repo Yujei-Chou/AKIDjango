@@ -1,6 +1,5 @@
 from django import template
 from alert.models import Patient
-import numpy as np
 register = template.Library()
 
 @register.filter

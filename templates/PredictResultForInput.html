@@ -183,12 +183,162 @@
     </div>
     <h1 align="center">Predict Result:</h1>
     {% for data in temp %}
+
         {% if data == 1 %}
-            <h4 align="center">With AKI</h4>
+            <h1 align="center">AKI</h1>
         {% endif %}
         {% if data == 0 %}
-            <h4 align="center">No AKI</h4>
+            <h1 align="center">No AKI</h1>
         {% endif %}
     {%endfor  %}
+    <table class="content-table" id="datatable" border="1" style="width: 100%">
+        <thead>
+            <tr>
+                <th>feature</th>
+                <th>24hrs~20hrs ago</th>
+                <th>20hrs~16hrs ago</th>
+                <th>16hrs~12hrs ago</th>
+                <th>12hrs~8hrs ago</th>
+                <th>8hrs~4hrs ago</th>
+                <th>4hrs~0hrs ago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Creatinine(mg/dl)</td>
+                {% for data in Crt %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Intake(ml)</td>
+                {% for data in Intake %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Urine(ml)</td>
+                {% for data in Urine %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>pH</td>
+                {% for data in pH %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Hct(%)</td>
+                {% for data in Hct %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>BUN(mg/dl)</td>
+                {% for data in BUN %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Na(mmol/L)</td>
+                {% for data in Na %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>K(mmol/L)</td>
+                {% for data in K %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Temperature(Celsius)</td>
+                {% for data in TP %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Systolic Blood Pressure(Non Invasive)(mmHg)</td>
+                {% for data in SystolicBP %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Mean Blood Pressure(Non Invasive)(mmHg)</td>
+                {% for data in MeanBP %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>MSI</td>
+                 {% for data in MSI %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>eGFR</td>
+                {% for data in eGFR %}
+                    {% if data != -10000 %}
+                        <td>{{ data }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <p>Age(Years):{{ Agestr }}</p>
+    <p>Weight(kg):{{ Weightstr }}</p>
+    <p>Gender(F/M):{{ Genderstr }}</p>
+
 </body>
 </html>

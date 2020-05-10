@@ -9,6 +9,8 @@ from django.db import models
 # from django.db.models import Q
 # from model_utils import Choices
 
+
+
 class Hospital(models.Model):
     hospitalid = models.IntegerField(primary_key=True)
     numbedscategory = models.CharField(max_length=32, blank=True, null=True)

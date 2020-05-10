@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'qyfy8+#rebhhe7$4qhmg*i3)b^ajjmawh-!y3)og7+%_dmzxgy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -130,3 +130,4 @@ LOGIN_REDIRECT_URL = '/patient'
 
 LOGIN_URL = '/login'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
